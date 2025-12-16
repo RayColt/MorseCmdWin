@@ -8,6 +8,9 @@ int selected = 0;
 HANDLE hIn, hOut;
 DWORD prevMode;
 
+/**
+* Constructor
+*/
 Menu::Menu(const std::vector<MenuItem>& options) : items(options)
 {
     hIn = GetStdHandle(STD_INPUT_HANDLE);
@@ -19,17 +22,22 @@ Menu::Menu(const std::vector<MenuItem>& options) : items(options)
     newMode &= ~ENABLE_QUICK_EDIT_MODE;
     newMode |= ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS;
     SetConsoleMode(hIn, newMode);
-
-   // hideCursor();
+    HideCursor();
 }
 
+/**
+* Destructor
+*/
 Menu::~Menu()
 {
     SetConsoleMode(hIn, prevMode);
-    showCursor();
+    ShowCursor();
 }
 
-void Menu::hideCursor()
+/**
+* Hide the console cursor.
+*/
+void Menu::HideCursor()
 {
     CONSOLE_CURSOR_INFO info;
     GetConsoleCursorInfo(hOut, &info);
@@ -37,7 +45,10 @@ void Menu::hideCursor()
     SetConsoleCursorInfo(hOut, &info);
 }
 
-void Menu::showCursor()
+/**
+* Show the console cursor.
+*/
+void Menu::ShowCursor()
 {
     CONSOLE_CURSOR_INFO info;
     GetConsoleCursorInfo(hOut, &info);
@@ -45,12 +56,20 @@ void Menu::showCursor()
     SetConsoleCursorInfo(hOut, &info);
 }
 
-void Menu::gotoXY(int x, int y) {
+/**
+* Move the console cursor to a specific position.
+*/
+void Menu::GotoXY(int x, int y) {
     COORD pos = { (SHORT)x, (SHORT)y };
     SetConsoleCursorPosition(hOut, pos);
 }
 
-void Menu::eraselines(int count)
+/**
+* Erase a number of lines in the console.
+ *
+ * @param count Number of lines to erase.
+ */
+void Menu::Eraselines(int count)
 {
     if (count > 0)
     {
@@ -66,7 +85,7 @@ void Menu::eraselines(int count)
 
 // Clear a few lines below the menu (where actions print) so previous longer output
 // doesn't leave trailing characters when a shorter message is printed.
-void Menu::clearOutputArea(int lines = 3)
+void Menu::ClearOutputArea(int lines = 3)
 {
     CONSOLE_SCREEN_BUFFER_INFO sbi;
     if (!GetConsoleScreenBufferInfo(hOut, &sbi)) return;
@@ -87,10 +106,40 @@ void Menu::clearOutputArea(int lines = 3)
     SetConsoleCursorPosition(hOut, outPos);
 }
 
-void Menu::draw()
+/**
+* Clear the entire console screen.
+*/
+void ClearScreen() 
 {
-    gotoXY(0, 0);
-    std::cout << "MORSE (Press F1 for help.)\n\n";
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_SCREEN_BUFFER_INFO csbi;
+    DWORD count;
+    DWORD cellCount;
+    COORD homeCoords = { 0, 0 };
+
+    if (hConsole == INVALID_HANDLE_VALUE) return;
+
+    // Get the number of cells in the current buffer
+    if (!GetConsoleScreenBufferInfo(hConsole, &csbi)) return;
+    cellCount = csbi.dwSize.X * csbi.dwSize.Y;
+
+    // Fill the entire buffer with spaces
+    if (!FillConsoleOutputCharacter(hConsole, (TCHAR)' ', cellCount, homeCoords, &count)) return;
+
+    // Fill the entire buffer with the current colors and attributes
+    if (!FillConsoleOutputAttribute(hConsole, csbi.wAttributes, cellCount, homeCoords, &count)) return;
+
+    // Move the cursor home
+    SetConsoleCursorPosition(hConsole, homeCoords);
+}
+
+/**
+* Draw the menu to the console.
+*/
+void Menu::Draw()
+{
+    GotoXY(0, 0);
+    std::cout << "MORSE (Press F1 for help)\nor select modus and press [enter]\n";
     for (int i = 0; i < items.size(); i++)
     {
         if (i == selected)
@@ -107,7 +156,7 @@ void Menu::draw()
 }
 
 // Wait for a console key-down event and return (consumes function keys properly)
-void Menu::waitForKeyDown()
+void Menu::WaitForKeyDown()
 {
     INPUT_RECORD rec;
     DWORD read;
@@ -119,9 +168,12 @@ void Menu::waitForKeyDown()
     }
 }
 
-void Menu::run()
+/**
+* Run the menu loop, handling user input.
+*/
+void Menu::Run()
 {
-    draw();
+    Draw();
     INPUT_RECORD record;
     DWORD read;
     bool running = true;
@@ -138,8 +190,8 @@ void Menu::run()
                 if (selected > 0)
                 {
                     selected--;
-                    draw();
-                    clearOutputArea();
+                    Draw();
+                    ClearOutputArea();
                     items[selected].action();
                 }
                 break;
@@ -147,13 +199,13 @@ void Menu::run()
                 if (selected < items.size() - 1)
                 {
                     selected++;
-                    draw();
-                    clearOutputArea();
+                    Draw();
+                    ClearOutputArea();
                     items[selected].action();
                 }
                 break;
             case VK_RETURN:
-                clearOutputArea();
+                ClearOutputArea();
                 items[selected].action();
                 running = false;
                 break;
@@ -163,12 +215,11 @@ void Menu::run()
                 break;
             case VK_F1:
                 system("cls");
-                std::cout << "HELP SCREEN\n";
                 Morse m; std::cout << m.GetHelpTxt();
                 std::cout << "Press any key to return...\n";
 
                 // Use ReadConsoleInput to wait for a key-down and consume console events properly.
-                waitForKeyDown();
+                WaitForKeyDown();
 
                 // Re-apply the console input mode to ensure mouse input is enabled
                 DWORD mode;
@@ -181,16 +232,15 @@ void Menu::run()
 
                 // Clear any stray events (optional) and restore screen
                 FlushConsoleInputBuffer(hIn);
-                eraselines(2);
+                Eraselines(2);
                 // clear console
-                system("cls");
-                draw(); // redraw menu
-
-                clearOutputArea();
+                //system("cls");
+                Draw(); // redraw menu
+                ClearScreen();
                 items[selected].action();
                 break;
             }
-            draw();
+            Draw();
         }
         else if (record.EventType == MOUSE_EVENT)
         {
@@ -202,8 +252,8 @@ void Menu::run()
                 if (row >= 0 && row < items.size())
                 {
                     selected = row;
-                    draw();
-                    clearOutputArea();
+                    Draw();
+                    ClearOutputArea();
                     items[selected].action();
                     //running = false;
                 }

@@ -504,14 +504,14 @@ string Morse::arg_string(char* arg)
 }
 
 /**
-* Generate string from arguments
-* @param arg
+* Get help text for morse usage
 *
 * @return string
 */
 string Morse::GetHelpTxt()
 {
 	string str = "";
+	str += "################# MORSE HELP SCREEN #################\n";
 	str += "Morse Dictionary, chars(url save) and spaces, lower case will be made upper case:\n";
 	str += "ABC DEFGHIJKLMNOPQRSTUVWXYZ 12 34567 890 !$ ' \" (), . _ - / : ; = ? @ \n\n";
 	str += "Usage console app version:\n morse.exe or morse\n\n";
@@ -533,12 +533,7 @@ string Morse::GetHelpTxt()
 	str += "SPS, samples per second, allowed between 8000 Hz - 48000 Hz\n";
 	str += "For creating sound files there is a maximum of 750 chars, bigger text might lead to a long term 'not responding'.\n\n";
 	str += "For inspiration have look at music notes their frequencies.\n";
-	str += "Example: ./morse.exe es -wpm:18 -hz:739.99 paris paris paris (sps not available in es mode)\n";
-	str += "Example: ./morse.exe ew paris paris paris\n";
-	str += "Example: ./morse.exe ew -wpm:16 -hz:880 paris paris paris\n";
-	str += "Example: ./morse.exe ewm -wpm:16 -hz:880 -sps:44100 paris paris paris\n";
 	str += "Example: ./morse.exe ew -wpm:20 -hz:1050 -sps:22050 paris paris paris\n\n";
-	str += "Press any key to return...\n";
 
 	return str;
 }

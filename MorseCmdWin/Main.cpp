@@ -61,6 +61,14 @@ int main(int argc, char* argv[])
 			str.resize(750);
 			string morse = m.morse_encode(str);
 			cout << morse << "\n";
+
+			if (m.samples_per_second < 8000.0) m.samples_per_second = 8000.0;
+			if (m.samples_per_second > 48000) m.samples_per_second = 48000.0;
+			if (m.frequency_in_hertz < 20.0) m.frequency_in_hertz = 20.0;
+			if (m.frequency_in_hertz > 8000.0) m.frequency_in_hertz = 8000.0;
+			if (m.words_per_minute < 0.0) m.words_per_minute = 0.0;
+			if (m.words_per_minute > 50.0) m.words_per_minute = 50.0;
+
 			if (action == "wav")
 			{
 				MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 2);
@@ -106,8 +114,8 @@ int main(int argc, char* argv[])
 		};
 		string arg_in;
 		Menu menu(morse_menu);
-		menu.run();
-		cout << "Type Morse/Txt & press [enter]:\n";
+		menu.Run();
+		cout << "Type Morse/Txt and press [enter]:\n";
 		getline(cin, arg_in);
 		if (action == "encode") cout << m.morse_encode(arg_in) << "\n";
 		if (action == "binary") cout << m.morse_binary(arg_in) << "\n";
@@ -142,14 +150,20 @@ int main(int argc, char* argv[])
 				cout << "Enter Samples Per Second(like 44100):\n";
 				getline(cin, arg_in);
 				m.samples_per_second = atof(arg_in.c_str());
+				if (m.samples_per_second < 8000.0) m.samples_per_second = 8000.0;
+				if (m.samples_per_second > 48000) m.samples_per_second = 48000.0;
 
 				cout << "Enter Tone Frequency(like 880):\n";
 				getline(cin, arg_in);
 				m.frequency_in_hertz = atof(arg_in.c_str());
+				if (m.frequency_in_hertz < 20.0) m.frequency_in_hertz = 20.0;
+				if (m.frequency_in_hertz > 8000.0) m.frequency_in_hertz = 8000.0;
 
 				cout << "Enter Words Per Minute(WPM):\n";
 				getline(cin, arg_in);
 				m.words_per_minute = atof(arg_in.c_str());
+				if (m.words_per_minute < 0.0) m.words_per_minute = 0.0;
+				if (m.words_per_minute > 50.0) m.words_per_minute = 50.0;
 
 				MorseWav mw = MorseWav(str.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 1);
 			}

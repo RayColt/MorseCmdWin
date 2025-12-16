@@ -27,18 +27,18 @@ class Menu
 public:
 	Menu(const std::vector<MenuItem>& options);
 	~Menu();
-	void hideCursor();
-	void showCursor();
-	void gotoXY(int x, int y);
-	void eraselines(int count);
+	void HideCursor();
+	void ShowCursor();
+	void GotoXY(int x, int y);
+	void Eraselines(int count);
 
 	// Clear a few lines below the menu (where actions print) so previous longer output	
-	void clearOutputArea(int lines);
+	void ClearOutputArea(int lines);
 
-	void draw();
+	void Draw();
 
 	// Wait for a console key-down event and return (consumes function keys properly)
-	void waitForKeyDown();
+	void WaitForKeyDown();
 
-	void run();
+	void Run();
 };
