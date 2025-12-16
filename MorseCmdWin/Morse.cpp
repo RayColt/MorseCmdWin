@@ -534,6 +534,5 @@ string Morse::GetHelpTxt()
 	str += "For creating sound files there is a maximum of 750 chars, bigger text might lead to a long term 'not responding'.\n\n";
 	str += "For inspiration have look at music notes their frequencies.\n";
 	str += "Example: ./morse.exe ew -wpm:20 -hz:1050 -sps:22050 paris paris paris\n\n";
-
 	return str;
 }
