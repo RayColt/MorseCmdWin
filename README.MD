@@ -1,5 +1,5 @@
 # Morse CMD for Windows
-A C++ console app with sound derived from ARPANET Pentagon's morse. This is a visual studio project, download, make sure you have visual studio and open the sln file.
+A Morse console and command line app 
 <br><br>
 
 <img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-16-141731.jpg/>
