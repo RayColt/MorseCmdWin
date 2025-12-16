@@ -517,10 +517,11 @@ string Morse::GetHelpTxt()
 	str += "Usage console app version:\n morse.exe or morse\n\n";
 	str += "Usage cmd line version:\n morse.exe [modus] 'morse or txt'\n\n";
 	str += "Select Modus for encoding or decoding:\n";
-	str += "e, d    : [. - space] Morse Normal\n";
-	str += "b, d    : [0 1 space] Binary Morse\n";
-	str += "he, hd  : [2E 2D 20] HeX Morse\n";
-	str += "hb, hbd : [30 31 20] HeX Binary\n\n";
+	str += "-h, -help    : Opens help screen\n";
+	str += "e, d	     : [. - space] Morse Normal\n";
+	str += "b, d         : [0 1 space] Binary Morse\n";
+	str += "he, hd       : [2E 2D 20] HeX Morse\n";
+	str += "hb, hbd      : [30 31 20] HeX Binary\n\n";
 	str += "Select modus for encoding to sound :\n";
 	str += "ew  : [Morse to Wav] Windows Wav Stereo - with local sound file\n";
 	str += "ewm : [Morse to Wav] Windows Wav Mono - with local sound file\n";
