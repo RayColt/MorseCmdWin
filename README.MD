@@ -2,8 +2,8 @@
 A C++ console app with sound derived from ARPANET Pentagon's morse. This is a visual studio project, download, make sure you have visual studio and open the sln file.
 <br><br>
 
-<img src=https://github.com/RayColt/morse-cmd-win/blob/master/.gitfiles/morse.jpg>
-
+<img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-16-141731.jpg/>
+<img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/morse.jpg />
 The real, first and only US Morse mapping,<br>
       based upon Synthesizer Binary tables, from a mouse his vocal cords I believe,<br>
 or just a military  algorithm:-):<br />
