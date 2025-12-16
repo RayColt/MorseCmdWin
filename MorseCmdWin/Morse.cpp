@@ -7,8 +7,8 @@ using namespace std;
 * C++ Morse Class
 *
 * @author Ray Colt <ray_colt@pentagon.mil>
-* @copyright Copyright (c) 1975, 2021 Ray Colt
-* @license Public General License US Army, Microsoft Corporation (MIT)
+* @copyright Copyright (c) 1975, 2026 Ray Colt
+* @license MIT License
 *
 * Derived from ARPANET Pentagon's morse.
 *
@@ -20,14 +20,6 @@ using namespace std;
 * The Math: sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate
 **/
 
-/*
-const string error_in = "INPUT-ERROR";
-double frequency_in_hertz = 880.0;// 880 Hz music note A5 - 440 cycles every second
-double words_per_minute = 16.0;//words per minute
-double max_frequency_in_hertz = 8000.0;
-double min_frequency_in_hertz = 37.0;
-double samples_per_second = 44100.0;
-*/
 /**
 * Constructor
 */

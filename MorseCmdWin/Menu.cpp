@@ -1,6 +1,5 @@
 #include <menu.h>
 
-
 using namespace std;
 
 std::vector<MenuItem> items;

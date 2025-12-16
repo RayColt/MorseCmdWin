@@ -1,7 +1,13 @@
 #include "morse.h"
 #include "morsewav.h"
+#include <menu.h>
 
 using namespace std;
+string action = "";
+void SetAction(string a)
+{
+	action = a;
+}
 /**
 * Main Class
 */
@@ -9,7 +15,7 @@ int main(int argc, char* argv[])
 {
 	Morse m;
 	int n;
-	string action = "encode";
+	
 	double sps = 44100;
 	if (argc != 1)
 	{
@@ -77,7 +83,26 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
+		int choice = 0;
+		std::vector<MenuItem> morse_menu =
+		{ {"Encode [.-]", []() {  SetAction("encode");  }},
+		{"Encode Binary [01]", []() { std::cout << "\nEncoding...2\n"; }},
+		{"Decode Morse / Binary Morse", []() { std::cout << "\nEncoding...3\n"; }},
+		{"Encode Hex [2D2E]", []() { std::cout << "\nEncoding...4\n"; }},
+		{"Decode Hex", []() { std::cout << "\nEncoding...5\n"; }},
+		{"Encode Binary Hex [3130]", []() { std::cout << "\nEncoding...6\n"; }},
+		{"Decode Binary Hex", []() { std::cout << "\nEncoding...7\n"; }},
+		{"Encode Morse, sound only", []() { std::cout << "\nEncoding...8\n"; }},
+		{"Encode Morse, stereo sound to wav file", []() { std::cout << "\nEncoding...9\n"; }},
+		{"Encode Morse, mono sound to wav file", []() { std::cout << "\nEncoding...10\n"; }}
+		};
 		string arg_in;
+		Menu menu(morse_menu);
+		menu.run();
+		cout << "Type Morse/Txt & press [enter]\n";
+		getline(cin, arg_in);
+		if (action == "encode") cout << m.morse_encode(arg_in) << "\n";
+		
 		cout << "MORSE (CMD line version: morse.exe -help or -h for info)\n";
 		cout << "morse table: \nABC DEFGHIJKLMNOPQRSTUVWXYZ 12 34567 890 ! $ ' \" (), . _ - / : ; = ? @ \n";
 		cout << "morse actions: \n0 [encode with sound], 1 [encode with stereo sound to wav file] \n2 [encode with mono sound to wav file]\n";
