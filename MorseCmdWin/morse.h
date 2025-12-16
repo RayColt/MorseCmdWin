@@ -38,8 +38,8 @@ public:
 	std::string morse_encode(std::string str);
 	std::string morse_decode(std::string str);
 	std::string morse_binary(std::string str);
-	std::string bin_morse_hexadecimal(std::string str, int modus);
-	std::string hexadecimal_bin_txt(std::string str, int modus);
+	std::string bin_morse_hexdecimal(std::string str, int modus);
+	std::string hexdecimal_bin_txt(std::string str, int modus);
 
 	std::string stringArrToString(std::vector<std::string> vstr);
 	std::string strtr(std::string str, std::string from, std::string to);

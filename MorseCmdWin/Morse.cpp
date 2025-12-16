@@ -221,7 +221,7 @@ string Morse::morse_decode(string str)
 * @param modus
 * @return string
 */
-string Morse::bin_morse_hexadecimal(string str, int modus)
+string Morse::bin_morse_hexdecimal(string str, int modus)
 {
 	string str1, str2;
 	const char* a[] = { "2E ", "2D ", "30 ", "31 " };
@@ -246,7 +246,7 @@ string Morse::bin_morse_hexadecimal(string str, int modus)
 * @param modus
 * @return string
 */
-string Morse::hexadecimal_bin_txt(string str, int modus)
+string Morse::hexdecimal_bin_txt(string str, int modus)
 {
 	string str1, str2;
 	if (regex_match(str, regex("[20|30|31|2D|2E|\\s]+")))
