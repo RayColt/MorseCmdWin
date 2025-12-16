@@ -21,8 +21,8 @@ int main(int argc, char* argv[])
 {
 	Morse m;
 	int n;
-	
 	double sps = 44100;
+
 	if (argc != 1)
 	{
 		if (strcmp(argv[1], "es") == 0) { action = "sound"; }
@@ -47,17 +47,17 @@ int main(int argc, char* argv[])
 			argc -= 1;
 			argv += 1;
 		}
-		if (action == "encode") { cout << m.morse_encode(str) << "\n"; }
-		else if (action == "binary") { cout << m.morse_binary(str) << "\n"; }
-		else if (action == "decode") { cout << m.morse_decode(str) << "\n"; }
-		else if (action == "hex") { cout << m.bin_morse_hexdecimal(str, 0) << "\n"; }
-		else if (action == "hexdec") { cout << m.hexdecimal_bin_txt(str, 0) << "\n"; } 
-		else if (action == "hexbin") { cout << m.bin_morse_hexdecimal(str, 1) << "\n"; }
-		else if (action == "hexbindec") { cout << m.hexdecimal_bin_txt(str, 1) << "\n"; }
+		if (action == "encode") { cout << str << "\n" << m.morse_encode(str) << "\n"; }
+		else if (action == "binary") { cout << str << "\n" << m.morse_binary(str) << "\n"; }
+		else if (action == "decode") { cout << str << "\n" << m.morse_decode(str) << "\n"; }
+		else if (action == "hex") { cout << str << "\n" << m.bin_morse_hexdecimal(str, 0) << "\n"; }
+		else if (action == "hexdec") { cout << str << "\n" << m.hexdecimal_bin_txt(str, 0) << "\n"; }
+		else if (action == "hexbin") { cout << str << "\n" << m.bin_morse_hexdecimal(str, 1) << "\n"; }
+		else if (action == "hexbindec") { cout << str << "\n" << m.hexdecimal_bin_txt(str, 1) << "\n"; }
 		else if (action == "sound" || action == "wav" || action == "wav_mono")
 		{
-			cout << "-wpm: " << m.words_per_minute << " (" << m.duration_milliseconds(m.words_per_minute) << " ms)\n";
-			cout << "-hz: " << m.frequency_in_hertz << "Hz (tone)\n";
+			//cout << "-wpm: " << m.words_per_minute << " (" << m.duration_milliseconds(m.words_per_minute) << " ms)\n";
+			//cout << "-hz: " << m.frequency_in_hertz << "Hz (tone)\n";
 			str.resize(750);
 			string morse = m.morse_encode(str);
 			cout << morse << "\n";
@@ -89,6 +89,8 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
+		// clear console
+		system("cls");
 		int choice = 0;
 		std::vector<MenuItem> morse_menu =
 		{ {"Encode [.-]", []() {  SetAction("encode");  }},
@@ -114,7 +116,6 @@ int main(int argc, char* argv[])
 		if (action == "hexdec") cout << m.hexdecimal_bin_txt(arg_in, 0) << "\n";
 		if (action == "hexbin") cout << m.bin_morse_hexdecimal(arg_in, 1) << "\n";
 		if (action == "hexbindec") cout << m.hexdecimal_bin_txt(arg_in, 1) << "\n";
-		
 		if (action == "sound" || action == "wav" || action == "wav_mono")
 		{
 			arg_in.resize(750);

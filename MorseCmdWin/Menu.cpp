@@ -1,4 +1,5 @@
 #include <menu.h>
+#include <morse.h>
 
 using namespace std;
 
@@ -13,12 +14,13 @@ Menu::Menu(const std::vector<MenuItem>& options) : items(options)
     hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
     GetConsoleMode(hIn, &prevMode);
+    
     DWORD newMode = prevMode;
     newMode &= ~ENABLE_QUICK_EDIT_MODE;
     newMode |= ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS;
     SetConsoleMode(hIn, newMode);
 
-    hideCursor();
+   // hideCursor();
 }
 
 Menu::~Menu()
@@ -162,6 +164,7 @@ void Menu::run()
             case VK_F1:
                 system("cls");
                 std::cout << "HELP SCREEN\n";
+                Morse m; std::cout << m.GetHelpTxt();
                 std::cout << "Press any key to return...\n";
 
                 // Use ReadConsoleInput to wait for a key-down and consume console events properly.
@@ -179,6 +182,8 @@ void Menu::run()
                 // Clear any stray events (optional) and restore screen
                 FlushConsoleInputBuffer(hIn);
                 eraselines(2);
+                // clear console
+                system("cls");
                 draw(); // redraw menu
 
                 clearOutputArea();
