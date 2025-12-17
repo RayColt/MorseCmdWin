@@ -82,7 +82,7 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				int size = morse.size();
+				int size = (int)morse.size();
 				printf("wave: %9.3lf Hz (-sps:%lg)\n", sps, sps);
 				printf("tone: %9.3lf Hz (-tone:%lg)\n", m.frequency_in_hertz, m.frequency_in_hertz);
 				printf("code: %9.3lf Hz (-wpm:%lg)\n", m.words_per_minute / 1.2, m.words_per_minute);
@@ -91,9 +91,9 @@ int main(int argc, char* argv[])
 				{
 					char c = morse.at(i);
 					string s(1, c);
-					if (s == ".") Beep(m.frequency_in_hertz, 1 * m.duration_milliseconds(m.words_per_minute));
-					if (s == "-") Beep(m.frequency_in_hertz, 3 * m.duration_milliseconds(m.words_per_minute));
-					if (s == " ") Beep(0, 3.5 * m.duration_milliseconds(m.words_per_minute));
+					if (s == ".") Beep((DWORD)m.frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(m.words_per_minute)));
+					if (s == "-") Beep((DWORD)m.frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(m.words_per_minute)));
+					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(m.words_per_minute)));
 				}
 			}
 		}
@@ -172,7 +172,7 @@ int main(int argc, char* argv[])
 			}
 			else
 			{
-				int size = str.size();
+				int size = (int)str.size();
 				printf("wave: %9.3lf Hz (-sps:%lg)\n", sps, sps);
 				printf("tone: %9.3lf Hz (-tone:%lg)\n", m.frequency_in_hertz, m.frequency_in_hertz);
 				printf("code: %9.3lf Hz (-wpm:%lg)\n", m.words_per_minute / 1.2, m.words_per_minute);
@@ -181,9 +181,9 @@ int main(int argc, char* argv[])
 				{
 					char c = str.at(i);
 					string s(1, c);
-					if (s == ".") Beep(m.frequency_in_hertz, 1 * m.duration_milliseconds(m.words_per_minute));
-					if (s == "-") Beep(m.frequency_in_hertz, 3 * m.duration_milliseconds(m.words_per_minute));
-					if (s == " ") Beep(0, 3.5 * m.duration_milliseconds(m.words_per_minute));
+					if (s == ".") Beep((DWORD)m.frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(m.words_per_minute)));
+					if (s == "-") Beep((DWORD)m.frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(m.words_per_minute)));
+					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(m.words_per_minute)));
 				}
 			}
 		}

@@ -108,7 +108,7 @@ void MorseWav::tone(int on_off)
         if (buffer_mono_pcm == NULL)
         {
             seconds = 1;
-            size = (seconds * sizeof buffer_mono_pcm * Sps);
+            size = (long)(seconds * sizeof buffer_mono_pcm * Sps);
             buffer_mono_pcm = allocate_PCM16_mono_buffer(size);
         }
     }
@@ -117,7 +117,7 @@ void MorseWav::tone(int on_off)
         if (buffer_pcm == NULL)
         {
             seconds = 1;
-            size = (seconds * sizeof buffer_pcm * Sps);
+            size = (long)(seconds * sizeof buffer_pcm * Sps);
             buffer_pcm = allocate_PCM16_stereo_buffer(size);
         }
     }
@@ -131,7 +131,7 @@ void MorseWav::tone(int on_off)
             if (pcm_count == Sps * seconds)
             {
                 seconds++;
-                size = (seconds * sizeof buffer_mono_pcm * Sps);
+                size = (long)(seconds * sizeof buffer_mono_pcm * Sps);
                 buffer_mono_pcm = reallocate_PCM16_mono_buffer(buffer_mono_pcm, size);
             }
             // generate one point on the sine wave
@@ -142,7 +142,7 @@ void MorseWav::tone(int on_off)
             if (pcm_count == Sps * seconds)
             {
                 seconds++;
-                size = (seconds * sizeof buffer_pcm * Sps);
+                size = (long)(seconds * sizeof buffer_pcm * Sps);
                 buffer_pcm = reallocate_PCM16_stereo_buffer(buffer_pcm, size);
             }
             pcm_count++;
@@ -295,7 +295,7 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     wave.nChannels = MONO_STEREO; // 1 or 2 ~ mono or stereo
     wave.wBitsPerSample = 16; // 8 or 16
     wave.nBlockAlign = (wave.wBitsPerSample * wave.nChannels) / 8;
-    wave.nSamplesPerSec = Sps;
+    wave.nSamplesPerSec = (DWORD)Sps;
     wave.nAvgBytesPerSec = wave.nSamplesPerSec * wave.nBlockAlign;
     wave.cbSize = 0;
     wave_size = sizeof wave;

@@ -307,7 +307,7 @@ string Morse::strtr(string str, string from, string to)
 	for (size_t i = 0, len = str.length(); i < len; i++)
 	{
 		char c = str.at(i);
-		int p = from.find(c);
+		int p = (int)from.find(c);
 		if (p >= 0)
 		{
 			char t = to.at(p);
@@ -410,7 +410,7 @@ string Morse::remove_whitespaces(string str)
 double Morse::duration_milliseconds(double wpm)
 {
 	double ms = 0.0;
-	if (!wpm <= 0.0)
+	if (wpm > 0.0)
 	{
 		//50 elements per word
 		double wps = wpm / 60.0; //words per second
