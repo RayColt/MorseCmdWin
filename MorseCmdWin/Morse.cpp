@@ -4,7 +4,7 @@
 * C++ Morse Class
 *
 * @author Ray Colt <ray_colt@pentagon.mil>
-* @copyright Copyright (c) 1975, 2026 Ray Colt
+* @copyright Copyright (c) 1978, 2026 Ray Colt
 * @license MIT License
 *
 * You can damage your hearing or your speakers if you play tones at extreme volumes!
