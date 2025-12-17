@@ -268,6 +268,9 @@ typedef struct _wave
     WORD  cbSize;          // size, in bytes, of extra format information 
 } WAVE;
 
+/**
+* Macro for writing data to file and updating wav_size
+*/
 #define FWRITE(buffer, size) \
     wav_size += size; \
     if (fwrite(buffer, size, 1, file) != 1) { \
