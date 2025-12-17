@@ -320,7 +320,7 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     file = fopen(path, "wb");
     if (file == NULL) 
     {
-        cerr << "Open failed: " << path << '\n';
+        fprintf(stderr, "Open failed: %s\n", path);
         exit(1);
     }
 
