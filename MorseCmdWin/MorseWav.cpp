@@ -303,7 +303,7 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     riff_size = fmt_size + wave_size + data_size; // 36 + data_size
    
     filesystem::path fullPath(path);
-    std::filesystem::path dirPath = fullPath.parent_path();// c:/dir1/dir2/hello.wav
+    filesystem::path dirPath = fullPath.parent_path();// c:/dir1/dir2/hello.wav
     if (!filesystem::exists(dirPath)) // c:/dir1/dir2/
     {
         try
@@ -312,7 +312,7 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
         }
         catch (const filesystem::filesystem_error& e)
         {
-            std::cerr << "Directory creation failed: " << e.what() << '\n';
+            cerr << "Directory creation failed: " << e.what() << '\n';
             exit(1);
         }
     }
@@ -320,7 +320,7 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     file = fopen(path, "wb");
     if (file == NULL) 
     {
-        std::cerr << "Open failed: " << path << '\n';
+        cerr << "Open failed: " << path << '\n';
         exit(1);
     }
 
