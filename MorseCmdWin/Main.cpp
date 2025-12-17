@@ -50,13 +50,13 @@ int main(int argc, char* argv[])
 			argc -= 1;
 			argv += 1;
 		}
-		if (action == "encode") { cout << str << "\n" << m.morse_encode(str) << "\n"; }
-		else if (action == "binary") { cout << str << "\n" << m.morse_binary(str) << "\n"; }
-		else if (action == "decode") { cout << str << "\n" << m.morse_decode(str) << "\n"; }
-		else if (action == "hex") { cout << str << "\n" << m.bin_morse_hexdecimal(str, 0) << "\n"; }
-		else if (action == "hexdec") { cout << str << "\n" << m.hexdecimal_bin_txt(str, 0) << "\n"; }
-		else if (action == "hexbin") { cout << str << "\n" << m.bin_morse_hexdecimal(str, 1) << "\n"; }
-		else if (action == "hexbindec") { cout << str << "\n" << m.hexdecimal_bin_txt(str, 1) << "\n"; }
+		if (action == "encode") { cout << m.morse_encode(str) << "\n"; }
+		else if (action == "binary") { cout << m.morse_binary(str) << "\n"; }
+		else if (action == "decode") { cout << m.morse_decode(str) << "\n"; }
+		else if (action == "hex") { cout << m.bin_morse_hexdecimal(str, 0) << "\n"; }
+		else if (action == "hexdec") { cout << m.hexdecimal_bin_txt(str, 0) << "\n"; }
+		else if (action == "hexbin") { cout << m.bin_morse_hexdecimal(str, 1) << "\n"; }
+		else if (action == "hexbindec") { cout << m.hexdecimal_bin_txt(str, 1) << "\n"; }
 		else if (action == "sound" || action == "wav" || action == "wav_mono")
 		{
 			//cout << "-wpm: " << m.words_per_minute << " (" << m.duration_milliseconds(m.words_per_minute) << " ms)\n";
