@@ -1,6 +1,6 @@
 # Morse CMD for Windows
 A Morse console and command line app.<br>
-todo: add save directory for wav files in c:\tmp or C:\Users\User\Desktop
+Save directory for wav files(see MorseWav.cpp) is &quotC:\Users\User\Desktop&quot
 <br><br>
 
 <img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-16-141731.jpg/>

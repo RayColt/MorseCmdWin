@@ -1,6 +1,4 @@
 #include "morsewav.h"
-
-using namespace std;
 /**
 * C++ MorseWav Class file used by morse.cpp
 * Convert morse code to STEREO Audio WAV file using PCM
@@ -9,7 +7,11 @@ using namespace std;
 * @copyright Copyright (c) 1978, 2026 Ray Colt
 * @license MIT License
 **/
+using namespace std;
 
+/**
+* Allocate or reallocate PCM buffers
+*/
 PCM16_stereo_t* MorseWav::allocate_PCM16_stereo_buffer(int32_t size)
 {
     return (PCM16_stereo_t*)malloc(sizeof(PCM16_stereo_t) * size);
@@ -54,7 +56,7 @@ long wav_size;
 */
 MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus)
 {
-    string filename = "morse";
+    string filename = "C:\\Users\\User\\Desktop\\wav-files-morse\\morse";
     filename += to_string(time(NULL));
     filename += ".wav";
     Path = filename.c_str();
@@ -296,12 +298,29 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     wave_size = sizeof wave;
     data_size = (count * wave.wBitsPerSample * wave.nChannels) / 8;
     riff_size = fmt_size + wave_size + data_size; // 36 + data_size
-#pragma warning(suppress : 4996)
-    if ((file = fopen(path, "wb")) == NULL)
+   
+    filesystem::path fullPath(path);
+    std::filesystem::path dirPath = fullPath.parent_path();// c:/dir1/dir2/hello.wav
+    if (!filesystem::exists(dirPath)) // c:/dir1/dir2/
     {
-        fprintf(stderr, "Open failed: %s\n", path);
+        try
+        {
+            filesystem::create_directories(dirPath);
+        }
+        catch (const filesystem::filesystem_error& e)
+        {
+            std::cerr << "Directory creation failed: " << e.what() << '\n';
+            exit(1);
+        }
+    }
+#pragma warning(suppress : 4996)
+    file = fopen(path, "wb");
+    if (file == NULL) 
+    {
+        std::cerr << "Open failed: " << path << '\n';
         exit(1);
     }
+
     FWRITE("RIFF", 4);
     FWRITE(&riff_size, 4);
     FWRITE("WAVE", 4);

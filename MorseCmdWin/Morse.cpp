@@ -1,8 +1,5 @@
 #include "morse.h"
 #include "morsewav.h"
-
-using namespace std;
-
 /**
 * C++ Morse Class
 *
@@ -10,15 +7,10 @@ using namespace std;
 * @copyright Copyright (c) 1975, 2026 Ray Colt
 * @license MIT License
 *
-* Derived from ARPANET Pentagon's morse.
-*
 * You can damage your hearing or your speakers if you play tones at extreme volumes!
 * This program will not allow to play morse < 37 Hz and > 8,000 Hz.
-*
-* Usage program, see: ./morse -help or -h
-*
-* The Math: sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate
 **/
+using namespace std;
 
 /**
 * Constructor
