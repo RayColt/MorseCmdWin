@@ -2,6 +2,7 @@
 #include "morse.h"
 #include "morsewav.h"
 #include "menu.h"
+#include <limits>
 /**
 * C++ Morse CMD for Windows
 * a Morse console and command line app
@@ -11,6 +12,7 @@ using namespace std;
 const int MAX_TXT_INPUT = 1000; // max chars for morse encoding/decoding
 const int MAX_MORSE_INPUT = 2000; // max chars for morse encoding/decoding
 const int MAX_SOUND_INPUT = 750; // max chars for sound generation
+
 /**
 * Create Safe morse settings
 */
@@ -60,22 +62,31 @@ int main(int argc, char* argv[])
 		argv += n;
 		// generate morse code
 		string arg_in;
-		while (argc > 2)
+		// choose max allowed chars based on requested action
+		int max_chars = MAX_TXT_INPUT;
+		if (action == "decode") max_chars = MAX_MORSE_INPUT;
+		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;
+
+		// collect arguments but never exceed max_chars
+		while (argc > 2 && static_cast<int>(arg_in.size()) < max_chars)
 		{
-			arg_in += m.arg_string(argv[2]);
+			std::string part = m.arg_string(argv[2]);
+			int remaining = max_chars - static_cast<int>(arg_in.size());
+			if (static_cast<int>(part.size()) > remaining) part = part.substr(0, remaining);
+			arg_in += part;
 			argc -= 1;
 			argv += 1;
 		}
-		if (action == "encode") { cout << m.morse_encode(arg_in.substr(0, MAX_TXT_INPUT)) << "\n"; }
-		else if (action == "binary") { cout << m.morse_binary(arg_in.substr(0, MAX_TXT_INPUT)) << "\n"; }
-		else if (action == "decode") { cout << m.morse_decode(arg_in.substr(0, MAX_MORSE_INPUT)) << "\n"; }
-		else if (action == "hex") { cout << m.bin_morse_hexdecimal(arg_in.substr(0, MAX_TXT_INPUT), 0) << "\n"; }
-		else if (action == "hexdec") { cout << m.hexdecimal_bin_txt(arg_in.substr(0, MAX_MORSE_INPUT), 0) << "\n"; }
-		else if (action == "hexbin") { cout << m.bin_morse_hexdecimal(arg_in.substr(0, MAX_TXT_INPUT), 1) << "\n"; }
-		else if (action == "hexbindec") { cout << m.hexdecimal_bin_txt(arg_in.substr(0, MAX_MORSE_INPUT), 1) << "\n"; }
+		if (action == "encode") { cout << m.morse_encode(arg_in) << "\n"; }
+		else if (action == "binary") { cout << m.morse_binary(arg_in) << "\n"; }
+		else if (action == "decode") { cout << m.morse_decode(arg_in) << "\n"; }
+		else if (action == "hex") { cout << m.bin_morse_hexdecimal(arg_in, 0) << "\n"; }
+		else if (action == "hexdec") { cout << m.hexdecimal_bin_txt(arg_in, 0) << "\n"; }
+		else if (action == "hexbin") { cout << m.bin_morse_hexdecimal(arg_in, 1) << "\n"; }
+		else if (action == "hexbindec") { cout << m.hexdecimal_bin_txt(arg_in, 1) << "\n"; }
 		else if (action == "sound" || action == "wav" || action == "wav_mono")
 		{
-			string morse = m.morse_encode(arg_in.substr(0, MAX_SOUND_INPUT));
+			string morse = m.morse_encode(arg_in);
 			cout << morse << "\n";
 			MakeMorseSafe(m);
 
@@ -125,18 +136,28 @@ int main(int argc, char* argv[])
 		string arg_in;
 		Menu menu(morse_menu);
 		menu.Run();
-		cout << "Type Morse/Txt and press [enter]:\n";
+
+		// remove any leftover console input (the Enter used to select the menu item)
+		//FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
+		//cin.clear();
+		cout << "Type Morse/Txt and press [enter] (empty line to finish):\n";
+
+		// choose max allowed chars based on requested action
+		int max_chars = MAX_TXT_INPUT;
+		if (action == "decode") max_chars = MAX_MORSE_INPUT;
+		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;
+
 		getline(cin, arg_in);
-		if (action == "encode") cout << m.morse_encode(arg_in.substr(0, MAX_TXT_INPUT)) << "\n";
-		if (action == "binary") cout << m.morse_binary(arg_in.substr(0, MAX_TXT_INPUT)) << "\n";
-		if (action == "decode") cout << m.morse_decode(arg_in.substr(0, MAX_MORSE_INPUT)) << "\n";
-		if (action == "hex") cout << m.bin_morse_hexdecimal(arg_in.substr(0, MAX_TXT_INPUT), 0) << "\n";
-		if (action == "hexdec") cout << m.hexdecimal_bin_txt(arg_in.substr(0, MAX_MORSE_INPUT), 0) << "\n";
-		if (action == "hexbin") cout << m.bin_morse_hexdecimal(arg_in.substr(0, MAX_TXT_INPUT), 1) << "\n";
-		if (action == "hexbindec") cout << m.hexdecimal_bin_txt(arg_in.substr(0, MAX_MORSE_INPUT), 1) << "\n";
+		if (action == "encode") cout << m.morse_encode(arg_in) << "\n";
+		if (action == "binary") cout << m.morse_binary(arg_in) << "\n";
+		if (action == "decode") cout << m.morse_decode(arg_in) << "\n";
+		if (action == "hex") cout << m.bin_morse_hexdecimal(arg_in, 0) << "\n";
+		if (action == "hexdec") cout << m.hexdecimal_bin_txt(arg_in, 0) << "\n";
+		if (action == "hexbin") cout << m.bin_morse_hexdecimal(arg_in, 1) << "\n";
+		if (action == "hexbindec") cout << m.hexdecimal_bin_txt(arg_in, 1) << "\n";
 		if (action == "sound" || action == "wav" || action == "wav_mono")
 		{
-			string morse = m.morse_encode(arg_in.substr(0, MAX_SOUND_INPUT));
+			string morse = m.morse_encode(arg_in);
 			cout << morse << "\n";
 			if (action == "wav")
 			{
