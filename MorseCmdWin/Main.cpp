@@ -136,10 +136,6 @@ int main(int argc, char* argv[])
 		string arg_in;
 		Menu menu(morse_menu);
 		menu.Run();
-
-		// remove any leftover console input (the Enter used to select the menu item)
-		//FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));
-		//cin.clear();
 		cout << "Type Morse/Txt and press [enter] (empty line to finish):\n";
 
 		// choose max allowed chars based on requested action
