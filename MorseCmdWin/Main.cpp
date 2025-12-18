@@ -8,7 +8,7 @@
 using namespace std;
  
 /**
-* Make morse settings safe
+* Create Safe morse settings
 */
 void MakeMorseSafe(Morse &morse)
 {
