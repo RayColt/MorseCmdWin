@@ -1,5 +1,5 @@
-#include <menu.h>
-#include <morse.h>
+#include "menu.h"
+#include "help.h"
 /**
 * C++ Menu Class
 */
@@ -217,7 +217,7 @@ void Menu::Run()
                 break;
             case VK_F1:
                 system("cls");
-                Morse m; std::cout << m.GetHelpTxt();
+                std::cout << Help::GetHelpTxt();
                 std::cout << "Press any key to return...\n";
 
                 // Use ReadConsoleInput to wait for a key-down and consume console events properly.

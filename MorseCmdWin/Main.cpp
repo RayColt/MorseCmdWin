@@ -1,6 +1,6 @@
 #include "morse.h"
 #include "morsewav.h"
-#include <menu.h>
+#include "menu.h"
 /**
 * C++ Morse CMD for Windows
 * a Morse console and command line app
