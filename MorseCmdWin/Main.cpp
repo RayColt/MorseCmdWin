@@ -6,12 +6,24 @@
 * a Morse console and command line app
 */
 using namespace std;
-
-string action = "";
+ 
+/**
+* Make morse settings safe
+*/
+void MakeMorseSafe(Morse &morse)
+{
+	if (morse.samples_per_second < 8000.0) morse.samples_per_second = 8000.0;
+	if (morse.samples_per_second > 48000) morse.samples_per_second = 48000.0;
+	if (morse.frequency_in_hertz < 20.0) morse.frequency_in_hertz = 20.0;
+	if (morse.frequency_in_hertz > 8000.0) morse.frequency_in_hertz = 8000.0;
+	if (morse.words_per_minute < 0.0) morse.words_per_minute = 0.0;
+	if (morse.words_per_minute > 50.0) morse.words_per_minute = 50.0;
+}
 
 /**
 * Set action from menu
 */
+string action = "";
 void SetAction(string a)
 {
 	action = a;
@@ -59,18 +71,10 @@ int main(int argc, char* argv[])
 		else if (action == "hexbindec") { cout << m.hexdecimal_bin_txt(str, 1) << "\n"; }
 		else if (action == "sound" || action == "wav" || action == "wav_mono")
 		{
-			//cout << "-wpm: " << m.words_per_minute << " (" << m.duration_milliseconds(m.words_per_minute) << " ms)\n";
-			//cout << "-hz: " << m.frequency_in_hertz << "Hz (tone)\n";
 			str.resize(750);
 			string morse = m.morse_encode(str);
 			cout << morse << "\n";
-
-			if (m.samples_per_second < 8000.0) m.samples_per_second = 8000.0;
-			if (m.samples_per_second > 48000) m.samples_per_second = 48000.0;
-			if (m.frequency_in_hertz < 20.0) m.frequency_in_hertz = 20.0;
-			if (m.frequency_in_hertz > 8000.0) m.frequency_in_hertz = 8000.0;
-			if (m.words_per_minute < 0.0) m.words_per_minute = 0.0;
-			if (m.words_per_minute > 50.0) m.words_per_minute = 50.0;
+			MakeMorseSafe(m);
 
 			if (action == "wav")
 			{
@@ -146,6 +150,7 @@ int main(int argc, char* argv[])
 				getline(cin, arg_in);
 				m.words_per_minute = atof(arg_in.c_str());
 
+				MakeMorseSafe(m);
 				MorseWav mw = MorseWav(str.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 2);
 			}
 			else if (action == "wav_mono")
@@ -153,21 +158,16 @@ int main(int argc, char* argv[])
 				cout << "Enter Samples Per Second(like 44100):\n";
 				getline(cin, arg_in);
 				m.samples_per_second = atof(arg_in.c_str());
-				if (m.samples_per_second < 8000.0) m.samples_per_second = 8000.0;
-				if (m.samples_per_second > 48000) m.samples_per_second = 48000.0;
 
 				cout << "Enter Tone Frequency(like 880):\n";
 				getline(cin, arg_in);
 				m.frequency_in_hertz = atof(arg_in.c_str());
-				if (m.frequency_in_hertz < 20.0) m.frequency_in_hertz = 20.0;
-				if (m.frequency_in_hertz > 8000.0) m.frequency_in_hertz = 8000.0;
 
 				cout << "Enter Words Per Minute(WPM):\n";
 				getline(cin, arg_in);
 				m.words_per_minute = atof(arg_in.c_str());
-				if (m.words_per_minute < 0.0) m.words_per_minute = 0.0;
-				if (m.words_per_minute > 50.0) m.words_per_minute = 50.0;
 
+				MakeMorseSafe(m);
 				MorseWav mw = MorseWav(str.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 1);
 			}
 			else
