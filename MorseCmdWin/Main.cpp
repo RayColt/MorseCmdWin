@@ -9,7 +9,7 @@
 */
 using namespace std;
 
-const int MAX_TXT_INPUT = 1000; // max chars for morse encoding/decoding
+const int MAX_TXT_INPUT = 6000; // max chars for morse encoding/decoding
 const int MAX_MORSE_INPUT = 2000; // max chars for morse encoding/decoding
 const int MAX_SOUND_INPUT = 750; // max chars for sound generation
 
@@ -68,12 +68,10 @@ int main(int argc, char* argv[])
 			argc -= 1;
 			argv += 1;
 		}
-
 		// choose max allowed chars based on requested action
 		int MAX = MAX_TXT_INPUT;
 		if (action == "decode") MAX = MAX_MORSE_INPUT;
 		else if (action == "sound" || action == "wav" || action == "wav_mono") MAX = MAX_SOUND_INPUT;
-
 		arg_in = arg_in.substr(0, MAX);
 		if (action == "encode") { cout << m.morse_encode(arg_in) << "\n"; }
 		else if (action == "binary") { cout << m.morse_binary(arg_in) << "\n"; }
@@ -135,12 +133,10 @@ int main(int argc, char* argv[])
 		Menu menu(morse_menu);
 		menu.Run();
 		cout << "Type Morse/Txt and press [enter] (empty line to finish):\n";
-
 		// choose max allowed chars based on requested action
 		int MAX = MAX_TXT_INPUT;
 		if (action == "decode") MAX = MAX_MORSE_INPUT;
 		else if (action == "sound" || action == "wav" || action == "wav_mono") MAX = MAX_SOUND_INPUT;
-
 		getline(cin, arg_in);
 		arg_in = arg_in.substr(0, MAX);
 		if (action == "encode") cout << m.morse_encode(arg_in) << "\n";
