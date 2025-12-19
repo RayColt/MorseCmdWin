@@ -144,10 +144,9 @@ int main(int argc, char* argv[])
 		menu.Run();
 		cout << "Type Morse/Txt and press [enter] (empty line to finish):\n";
 		// choose max allowed chars based on requested action
-		int max_chars = MAX_TXT_INPUT;
+		int max_chars =  MAX_TXT_INPUT;
 		if (action == "decode") max_chars = MAX_MORSE_INPUT;
-		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;
-		
+		else if (action == "sound" || action == "wav" || action == "wav_mono") 	max_chars = MAX_SOUND_INPUT;
 		while (true)
 		{
 			string line;
@@ -183,7 +182,7 @@ int main(int argc, char* argv[])
 					getline(cin, line);
 					if (static_cast<int>(line.size()) > 5)
 					{
-						cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
+						cerr << "Maximum input size reached (" << 5 << " characters), re-enter:\n";
 						continue;
 					}
 					arg_in = line;
@@ -197,9 +196,9 @@ int main(int argc, char* argv[])
 					string line;
 					cout << flush;
 					getline(cin, line);
-					if (static_cast<int>(line.size()) > max_chars)
+					if (static_cast<int>(line.size()) > 4)
 					{
-						cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
+						cerr << "Maximum input size reached (" << 4 << " characters), re-enter:\n";
 						continue;
 					}
 					arg_in = line;
@@ -215,7 +214,7 @@ int main(int argc, char* argv[])
 					getline(cin, line);
 					if (static_cast<int>(line.size()) > 2)
 					{
-						cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
+						cerr << "Maximum input size reached (" << 2 << " characters), re-enter:\n";
 						continue;
 					}
 					arg_in = line;
