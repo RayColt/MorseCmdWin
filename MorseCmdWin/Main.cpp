@@ -70,9 +70,9 @@ int main(int argc, char* argv[])
 		while (true)
 		{
 			cout << flush;
-			if (argc > 2) break;
+			if (argc < 2) break;
 			arg_in += m.arg_string(argv[2]);
-			if (static_cast<int>(arg_in.size()) > 4)
+			if (static_cast<int>(arg_in.size()) > max_chars)
 			{
 				cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
 				continue;
