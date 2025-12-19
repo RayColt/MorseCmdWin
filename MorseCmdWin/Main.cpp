@@ -146,7 +146,7 @@ int main(int argc, char* argv[])
 		// choose max allowed chars based on requested action
 		int max_chars =  MAX_TXT_INPUT;
 		if (action == "decode") max_chars = MAX_MORSE_INPUT;
-		else if (action == "sound" || action == "wav" || action == "wav_mono") 	max_chars = MAX_SOUND_INPUT;
+		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;
 		while (true)
 		{
 			string line;
