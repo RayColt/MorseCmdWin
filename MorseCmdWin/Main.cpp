@@ -2,7 +2,7 @@
 #include "morse.h"
 #include "morsewav.h"
 #include "menu.h"
-#include <iostream>
+//#include <iostream>
 /**
 * C++ Morse CMD for Windows
 * a Morse console and command line app
@@ -65,19 +65,21 @@ int main(int argc, char* argv[])
 		// choose max allowed chars based on requested action
 		int max_chars = MAX_TXT_INPUT;
 		if (action == "decode") max_chars = MAX_MORSE_INPUT;
-		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;
-		arg_in = arg_in.substr(0, max_chars);
-		
-		// collect arguments but never exceed max_chars
-		while (argc > 2 && static_cast<int>(arg_in.size()) < max_chars)
+		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;	
+
+		while (true)
 		{
-			std::string part = m.arg_string(argv[2]);
-			int remaining = max_chars - static_cast<int>(arg_in.size());
-			if (remaining <= 0) break; // nothing more allowed
-			if (static_cast<int>(part.size()) > remaining) part = part.substr(0, remaining);
-			arg_in += part;
+			cout << flush;
+			if (argc > 2) break;
+			arg_in += m.arg_string(argv[2]);
+			if (static_cast<int>(arg_in.size()) > max_chars)
+			{
+				cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
+				continue;
+			}
 			argc -= 1;
 			argv += 1;
+			break;
 		}
 
 		if (action == "encode") { cout << m.morse_encode(arg_in) << "\n"; }
@@ -169,7 +171,7 @@ int main(int argc, char* argv[])
 		{
 			string morse = m.morse_encode(arg_in);
 			cout << morse << "\n";
-			MakeMorseSafe(m);
+
 			if (action == "wav" || action == "wav_mono")
 			{
 				cout << "Enter Samples Per Second(like 44100):\n";
