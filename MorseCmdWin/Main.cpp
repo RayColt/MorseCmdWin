@@ -2,7 +2,7 @@
 #include "morse.h"
 #include "morsewav.h"
 #include "menu.h"
-//#include <iostream>
+#include <iostream>
 /**
 * C++ Morse CMD for Windows
 * a Morse console and command line app
@@ -16,7 +16,7 @@ const int MAX_SOUND_INPUT = 750; // max chars for sound generation
 /**
 * Create Safe morse settings
 */
-void MakeMorseSafe(Morse &morse)
+static void MakeMorseSafe(Morse &morse)
 {
 	if (morse.samples_per_second < 8000.0) morse.samples_per_second = 8000.0;
 	if (morse.samples_per_second > 48000) morse.samples_per_second = 48000.0;
@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
 			cout << flush;
 			if (argc > 2) break;
 			arg_in += m.arg_string(argv[2]);
-			if (static_cast<int>(arg_in.size()) > max_chars)
+			if (static_cast<int>(arg_in.size()) > 4)
 			{
 				cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
 				continue;
@@ -224,24 +224,28 @@ int main(int argc, char* argv[])
 
 				MakeMorseSafe(m);
 				if (action == "wav")
-					MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 2);
-				else
-					MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 1);
-			}
-			else
-			{
-				int size = (int)morse.size();
-				printf("wave: %9.3lf Hz (-sps:%lg)\n", sps, sps);
-				printf("tone: %9.3lf Hz (-tone:%lg)\n", m.frequency_in_hertz, m.frequency_in_hertz);
-				printf("code: %9.3lf Hz (-wpm:%lg)\n", m.words_per_minute / 1.2, m.words_per_minute);
-				cout << "to be able to change sound settings, choose sound to wav file\n";
-				for (size_t i = 0; i < size; ++i)
 				{
-					char c = morse.at(i);
-					string s(1, c);
-					if (s == ".") Beep((DWORD)m.frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(m.words_per_minute)));
-					if (s == "-") Beep((DWORD)m.frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(m.words_per_minute)));
-					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(m.words_per_minute)));
+					MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 2);
+				}
+				else if (action == "wav_mono")
+				{
+					MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, true, 1);
+				}
+				else
+				{
+					int size = (int)morse.size();
+					printf("wave: %9.3lf Hz (-sps:%lg)\n", sps, sps);
+					printf("tone: %9.3lf Hz (-tone:%lg)\n", m.frequency_in_hertz, m.frequency_in_hertz);
+					printf("code: %9.3lf Hz (-wpm:%lg)\n", m.words_per_minute / 1.2, m.words_per_minute);
+					cout << "to be able to change sound settings, choose sound to wav file\n";
+					for (size_t i = 0; i < size; ++i)
+					{
+						char c = morse.at(i);
+						string s(1, c);
+						if (s == ".") Beep((DWORD)m.frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(m.words_per_minute)));
+						if (s == "-") Beep((DWORD)m.frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(m.words_per_minute)));
+						if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(m.words_per_minute)));
+					}
 				}
 			}
 		}
