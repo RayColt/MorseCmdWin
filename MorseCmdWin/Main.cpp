@@ -67,19 +67,20 @@ int main(int argc, char* argv[])
 		if (action == "decode") max_chars = MAX_MORSE_INPUT;
 		else if (action == "sound" || action == "wav" || action == "wav_mono") max_chars = MAX_SOUND_INPUT;	
 
-		while (true)
+		// collect arguments but never exceed max_chars
+		while (argc > 2 && static_cast<int>(arg_in.size()) < max_chars)
 		{
-			cout << flush;
-			if (argc < 2) break;
-			arg_in += m.arg_string(argv[2]);
-			if (static_cast<int>(arg_in.size()) > max_chars)
+			string part = m.arg_string(argv[2]);
+			int remaining = max_chars - static_cast<int>(arg_in.size());
+			if (remaining <= 0) break; // nothing more allowed
+			if (static_cast<int>(part.size()) > remaining) 
 			{
-				cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
-				continue;
+				part = part.substr(0, remaining);
+				cerr << "Maximum input size reached (" << max_chars << " characters).\n";
 			}
+			arg_in += part;
 			argc -= 1;
 			argv += 1;
-			break;
 		}
 
 		if (action == "encode") { cout << m.morse_encode(arg_in) << "\n"; }
@@ -196,7 +197,7 @@ int main(int argc, char* argv[])
 					string line;
 					cout << flush;
 					getline(cin, line);
-					if (static_cast<int>(line.size()) > 4)
+					if (static_cast<int>(line.size()) > max_chars)
 					{
 						cerr << "Maximum input size reached (" << max_chars << " characters), re-enter:\n";
 						continue;
