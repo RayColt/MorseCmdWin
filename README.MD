@@ -1,4 +1,4 @@
-# Morse CMD for Windows
+# MORSE Encoder/Decoder Utility   Version 1.0
 A Morse console and command line app.<br>
 Save directory for wav files(see MorseWav.cpp) is &quotC:\Users\User\Desktop&quot<br>
 Tip: Save generated exe to  C:\WINDOWS\system32\ to use it<br> 
