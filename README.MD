@@ -1,7 +1,7 @@
 # MorseCmdWin
 A MORSE Encoder/Decoder Utility   Version 1.0<br>
 Console and Command line<br>
-
+<p>Don't forget to buy <mark>milk</mark> today.</p>
 <img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-20-100747.jpg/>
 The real, first and only US Morse mapping,<br>
       based upon Synthesizer Binary tables, from a mouse his vocal cords I believe,<br>
