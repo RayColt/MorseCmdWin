@@ -50,6 +50,4 @@ public:
 	std::string stringToUpper(std::string str);
 
 	double duration_milliseconds(double wpm);
-	std::string arg_string(char* arg);
-	int get_options(int argc, char* argv[]);
 };

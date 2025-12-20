@@ -2,11 +2,14 @@
 #include "morse.h"
 #include "morsewav.h"
 #include "menu.h"
+#include "help.h"
 /**
 * C++ Morse CMD for Windows
 * a Morse console and command line app
 */
 using namespace std;
+
+Morse m;
 
 const int MAX_TXT_INPUT = 6000; // max chars for morse encoding/decoding
 const int MAX_MORSE_INPUT = 2000; // max chars for morse encoding/decoding
@@ -33,13 +36,84 @@ void SetAction(string a)
 {
 	action = a;
 }
+/**
+* Reaf cmd line user arguments
+*
+* @param argc
+* @param argv[]
+* @return int
+*/
+int get_options(int argc, char* argv[])
+{
+	int args = 0;
+	bool ok = false;
+	if (strncmp(argv[1], "e", 1) == 0 || strncmp(argv[1], "b", 1) == 0 || strncmp(argv[1], "d", 1) == 0 ||
+		strncmp(argv[1], "he", 2) == 0 || strncmp(argv[1], "hd", 2) == 0 || strncmp(argv[1], "hb", 2) == 0 ||
+		strncmp(argv[1], "hbd", 3) == 0)
+	{
+		ok = true;
+	}
+	if (strncmp(argv[1], "-help", 5) == 0 || strncmp(argv[1], "-h", 2) == 0)
+	{
+		cout << Help::GetHelpTxt();
+		ok = true;
+	}
+	else if (ok)
+	{
+		while (argc > 1)
+		{
+			if (strncmp(argv[2], "-hz:", 4) == 0)
+			{
+				m.frequency_in_hertz = atof(&argv[2][4]);
+				if (m.frequency_in_hertz > m.max_frequency_in_hertz) m.frequency_in_hertz = m.max_frequency_in_hertz;
+				if (m.frequency_in_hertz < m.min_frequency_in_hertz) m.frequency_in_hertz = m.min_frequency_in_hertz;
+			}
+			else if (strncmp(argv[2], "-wpm:", 5) == 0)
+			{
+				m.words_per_minute = atof(&argv[2][5]);
+			}
+			else if (strncmp(argv[2], "-sps:", 5) == 0)
+			{
+				m.samples_per_second = atof(&argv[2][5]);
+			}
+			else
+			{
+				break;
+			}
+			argc -= 1;
+			argv += 1;
+			args += 1;
+		}
+	}
+	else
+	{
+		fprintf(stderr, "option error %s, see morse -help for info\n", argv[2]);
+		exit(1);
+	}
+	return args;
+}
 
+/**
+* Generate string from arguments
+* @param arg
+*
+* @return string
+*/
+string arg_string(char* arg)
+{
+	char c; string str;
+	while ((c = *arg++) != '\0')
+	{
+		str += c;
+	}
+	str += " ";
+	return str;
+}
 /**
 * Main Class
 */
 int main(int argc, char* argv[])
 {
-	Morse m;
 	int n;
 	double sps = 44100;
 
@@ -56,7 +130,7 @@ int main(int argc, char* argv[])
 		else if (strcmp(argv[1], "hb") == 0) { action = "hexbin"; }
 		else if (strcmp(argv[1], "hbd") == 0) { action = "hexbindec"; }
 		// check options
-		n = m.get_options(argc, argv);
+		n = get_options(argc, argv);
 		argc -= n;
 		argv += n;
 		// generate morse code
@@ -69,7 +143,7 @@ int main(int argc, char* argv[])
 		// collect arguments but never exceed max_chars
 		while (argc > 2 && static_cast<int>(arg_in.size()) < max_chars)
 		{
-			string part = m.arg_string(argv[2]);
+			string part = arg_string(argv[2]);
 			int remaining = max_chars - static_cast<int>(arg_in.size());
 			if (remaining <= 0) break; // nothing more allowed
 			if (static_cast<int>(part.size()) > remaining) 
