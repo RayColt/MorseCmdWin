@@ -1,5 +1,5 @@
 # MORSE Encoder/Decoder Utility   Version 1.0
-A Morse console and command line app.<br><br>
+A Morse console and command line app.<br>
 
 <img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-20-094649.jpg/>
 The real, first and only US Morse mapping,<br>
