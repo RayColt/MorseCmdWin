@@ -215,7 +215,7 @@ int main(int argc, char* argv[])
 		string arg_in;
 		Menu menu(morse_menu);
 		menu.Run();
-		cout << "Type Morse/Txt and press [enter] (empty line to finish):\n";
+		cout << "Type Morse/Txt and press [enter]:\n";
 		// choose max allowed chars based on requested action
 		int max_chars =  MAX_TXT_INPUT;
 		if (action == "decode") max_chars = MAX_MORSE_INPUT;

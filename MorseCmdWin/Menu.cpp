@@ -141,7 +141,7 @@ void ClearScreen()
 void Menu::Draw()
 {
     GotoXY(0, 0);
-    std::cout << "MORSE (Press F1 for help)\nor select modus and press [enter]\n";
+    std::cout << "MORSE (Press F1 for help)\nselect modus and press [enter]\n";
     for (int i = 0; i < items.size(); i++)
     {
         if (i == selected)
