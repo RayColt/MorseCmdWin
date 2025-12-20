@@ -56,8 +56,8 @@ long wav_size;
 */
 MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus)
 {
-    string filename = "C:\\Users\\User\\Desktop\\wav-files-morse";
-	filename += "\\morse";
+    string filename = "C:\\Users\\User\\Desktop\\wav-files-morse\\";
+	filename += "morse";
     filename += to_string(time(NULL));
     filename += ".wav";
     Path = filename.c_str();
