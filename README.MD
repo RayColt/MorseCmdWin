@@ -1,9 +1,5 @@
 # MORSE Encoder/Decoder Utility   Version 1.0
-A Morse console and command line app.<br>
-Save directory for wav files(see MorseWav.cpp) is &quotC:\Users\User\Desktop&quot<br>
-Tip: Save generated exe to  C:\WINDOWS\system32\ to use it<br> 
-with Win + R or system wide as: PS D:\> morse ew -wpm:20 -hz:1050 -sps:22050 paris paris paris
-<br><br>
+A Morse console and command line app.<br><br>
 
 <img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-20-094649.jpg/>
 The real, first and only US Morse mapping,<br>
