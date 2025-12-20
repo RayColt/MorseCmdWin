@@ -26,8 +26,8 @@ string Help::GetHelpTxt()
 	str += "A-Z  0-9  !$ ' \" ( ) , . _ - / : ; = ? @\n";
 	str += "\n";
 	str += "USAGE:\n";
-	str += "./morse.exe                           Console\n";
-	str += "./morse.exe [-mode:] \"text or morse\"  Command line\n";
+	str += ".\\morse.exe                           Console\n";
+	str += ".\\morse.exe [-mode:] \"text or morse\"  Command line\n";
 	str += "\n";
 	str += "MODES:\n";
 	str += "-h -help         Display this help screen\n";
@@ -42,10 +42,10 @@ string Help::GetHelpTxt()
 	str += "es               Morse to Windows Beep  No SPS required\n";
 	str += "\n";
 	str += "EXAMPLES:\n";
-	str += "./morse.exe d \"... ---  ...  ---\"\n";
+	str += ".\\morse.exe d \"... ---  ...  ---\"\n";
 	str += "(Double quotes preserve double spaces used for word breaks)\n";
 	str += "\n";
-	str += "./morse.exe ew -wpm:20 - hz:1050 -sps:22050 paris paris paris\n";
+	str += ".\\morse.exe ew -wpm:20 - hz:1050 -sps:22050 paris paris paris\n";
 	str += "\n";
 	str += "SOUND SETTINGS:\n";
 	str += "Tone(Hz)         20 - 8000 Hz\n";
