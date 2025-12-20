@@ -5,14 +5,11 @@ Tip: Save generated exe to  C:\WINDOWS\system32\ to use it<br>
 with Win + R or system wide as: PS D:\> morse ew -wpm:20 -hz:1050 -sps:22050 paris paris paris
 <br><br>
 
-<img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-16-141731.jpg/>
-<img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/morse.jpg />
+<img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-20-094649.jpg/>
 The real, first and only US Morse mapping,<br>
       based upon Synthesizer Binary tables, from a mouse his vocal cords I believe,<br>
-or just a military  algorithm:-):<br />
-        <b>We removed the first number one(0b1 aka Obi-Wan, it became my nick name I was 4 years old, they used the name in Star Wars to honor morse code),
-        reversed it(think Endian/IBM PowerPC) 
-        to save Data and CPU's in war times. Its even URL Save.<br>
+or just a military  algorithm:-):<br /><br />
+
 <a href="https://raycolt.github.io/morse/">WORKING HTML EXAMPLE</a><br>
 <pre>
 uint16_t Morse::encode(uint8_t character) 
