@@ -30,8 +30,7 @@ string Help::GetHelpTxt()
 	str += "./morse.exe [-mode:] \"text or morse\"  Command line\n";
 	str += "\n";
 	str += "MODES:\n";
-	str += "-h -help        Display this help screen\n";
-	str += "\n";
+	str += "-h -help         Display this help screen\n";
 	str += "e, d             Morse Normal(. - <space>)\n";
 	str += "b, d             Binary Morse(0 1 <space>)\n";
 	str += "he, hd           Hex Morse(2E 2D 20)\n";
