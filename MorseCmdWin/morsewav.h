@@ -15,6 +15,7 @@
 /**
 * C++ MorseWav.h file
 */	
+
 typedef struct PCM16_stereo_s
 {
 	int16_t left;
