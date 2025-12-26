@@ -24,7 +24,7 @@ Menu::Menu(const std::vector<MenuItem>& options) : items(options)
     newMode &= ~ENABLE_QUICK_EDIT_MODE;
     newMode |= ENABLE_MOUSE_INPUT | ENABLE_EXTENDED_FLAGS;
     SetConsoleMode(hIn, newMode);
-    //HideCursor();
+    HideCursor();
 }
 
 /**
