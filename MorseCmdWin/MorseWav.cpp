@@ -1,5 +1,7 @@
 #include "morsewav.h"
 #include "dir.h"
+#include <shellapi.h>
+#pragma comment(lib, "Shell32.lib")
 /**
 * C++ MorseWav Class file used by morse.cpp
 * Convert morse code to STEREO Audio WAV file using PCM
@@ -82,12 +84,13 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     printf(" written to %s (%.1f kB)\n", Path, wav_size / 1024.0);
     if (play)
     {
-        string str = Path;
+        /*string str = Path;
         str += " /play /close ";
         str += Path;
         const char* c = str.c_str();
         printf("** %s\n", c);
-        system(c);
+        system(c);*/
+        ShellExecuteA(NULL, "open", Path, NULL, NULL, SW_SHOWNORMAL);
     }
 }
 
