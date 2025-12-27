@@ -104,7 +104,7 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
 void MorseWav::tone(int on_off)
 {
     double ampl = 32000.0; // amplitude 32KHz for digital sound (max height of wave)
-    double pi = 3.1415926535897932384626433832795;
+    double pi = M_PI;
     double w = 2.0 * pi * Tone;
     long i, n, size;
     static long seconds;

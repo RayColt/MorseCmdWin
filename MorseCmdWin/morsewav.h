@@ -4,6 +4,8 @@
 #define _WIN32_WINNT 0x0601
 #endif
 
+#define _USE_MATH_DEFINES // Required for MSVC/Windows
+#include <cmath>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
