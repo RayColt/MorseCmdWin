@@ -132,12 +132,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="dir.h" />
     <ClInclude Include="help.h" />
     <ClInclude Include="menu.h" />
     <ClInclude Include="morse.h" />
     <ClInclude Include="morsewav.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Dir.cpp" />
     <ClCompile Include="Help.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Menu.cpp" />

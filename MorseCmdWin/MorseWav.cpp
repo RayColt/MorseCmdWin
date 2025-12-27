@@ -1,4 +1,5 @@
 #include "morsewav.h"
+#include "dir.h"
 /**
 * C++ MorseWav Class file used by morse.cpp
 * Convert morse code to STEREO Audio WAV file using PCM
@@ -303,20 +304,20 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     data_size = (count * wave.wBitsPerSample * wave.nChannels) / 8;
     riff_size = fmt_size + wave_size + data_size; // 36 + data_size
    
-    filesystem::path fullPath(path);
-    filesystem::path dirPath = fullPath.parent_path();// c:/dir1/dir2/hello.wav
-    if (!filesystem::exists(dirPath)) // c:/dir1/dir2/
+    string dirPath = Dir::GetParentPath(path);
+    if (!Dir::Exists(dirPath))
     {
         try
         {
-            filesystem::create_directories(dirPath);
+            Dir::CreateDirectories(dirPath);
         }
-        catch (const filesystem::filesystem_error& e)
+        catch (const exception& e)
         {
             cerr << "Directory creation failed: " << e.what() << '\n';
             exit(1);
         }
     }
+
 #pragma warning(suppress : 4996)
     file = fopen(path, "wb");
     if (file == NULL) 
