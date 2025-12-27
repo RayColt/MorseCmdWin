@@ -342,5 +342,9 @@ void MorseWav::wav_write(const char* path, PCM16_mono_t* buffer_mono_pcm, PCM16_
     {
         FWRITE(buffer_pcm, data_size);
     }
+    fflush(file);
+    // int fd = _fileno(file);
+    // struct _stat st;
+    // int ok = _fstat(fd, &st);
     fclose(file);
 }
