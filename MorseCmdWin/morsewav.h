@@ -30,16 +30,40 @@ typedef struct PCM16_mono_s
 
 class MorseWav
 {
-public:
+private:
+	/**
+	* member variables
+	*/
+#define EPW 50      // elements per word (definition)
+	const char* MorseCode; // string array with morse
+	int Debug;      // debug mode
+	int Play;       // play WAV file
+	int MONO_STEREO = 1;   // stereo or mono modus
+	const char* Path = "morse.wav";    // output filename
+	double Tone;    // tone frequency (Hz)
+	double Wpm;     // words per minute
+	double Eps;     // elements per second (frequency of basic morse element)
+	double Bit;     // duration of basic morse element,cell,quantum (seconds)
+	double Sps;     // samples per second (WAV file, sound card)
+	PCM16_mono_t* buffer_mono_pcm = NULL; // array with data
+	PCM16_stereo_t* buffer_pcm = NULL;
+	long pcm_count; // total number of samples
+	long wav_size;
 	PCM16_stereo_t* allocate_PCM16_stereo_buffer(int32_t size);
 	PCM16_stereo_t* reallocate_PCM16_stereo_buffer(PCM16_stereo_t* buffer, int32_t size);
 	PCM16_mono_t* allocate_PCM16_mono_buffer(int32_t size);
 	PCM16_mono_t* reallocate_PCM16_mono_buffer(PCM16_mono_t* buffer, int32_t size);
 
+public:
 	/**
 	* Constructor
 	*/
 	MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus);
+	~MorseWav()
+	{
+		delete[] buffer_pcm;
+		delete[] buffer_mono_pcm;
+	}
 
 private:
 	/**

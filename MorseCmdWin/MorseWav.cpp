@@ -36,25 +36,6 @@ PCM16_mono_t* MorseWav::reallocate_PCM16_mono_buffer(PCM16_mono_t* buffer, int32
 }
 
 /**
-* Instance variables
-*/
-#define EPW 50      // elements per word (definition)
-const char* MorseCode; // string array with morse
-int Debug;      // debug mode
-int Play;       // play WAV file
-int MONO_STEREO = 1;   // stereo or mono modus
-const char* Path = "morse.wav";    // output filename
-double Tone;    // tone frequency (Hz)
-double Wpm;     // words per minute
-double Eps;     // elements per second (frequency of basic morse element)
-double Bit;     // duration of basic morse element,cell,quantum (seconds)
-double Sps;     // samples per second (WAV file, sound card)
-PCM16_mono_t* buffer_mono_pcm = NULL; // array with data
-PCM16_stereo_t* buffer_pcm = NULL;
-long pcm_count; // total number of samples
-long wav_size;
-
-/**
 * Constructor
 */
 MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus)
@@ -84,7 +65,8 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     printf(" written to %s (%.1f kB)\n", Path, wav_size / 1024.0);
     if (play)
     {
-        /*string str = Path;
+        /*
+        string str = Path;
         str += " /play /close ";
         str += Path;
         const char* c = str.c_str();
