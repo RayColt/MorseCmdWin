@@ -137,6 +137,7 @@
     <ClInclude Include="menu.h" />
     <ClInclude Include="morse.h" />
     <ClInclude Include="morsewav.h" />
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Dir.cpp" />
@@ -148,6 +149,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.MD" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Morse Code.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="app.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
