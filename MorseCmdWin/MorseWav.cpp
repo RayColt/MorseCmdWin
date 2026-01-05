@@ -24,6 +24,9 @@ long PcmCount; // total number of samples
 long WaveSize; // size of wave file in bytes
 const string dir = "C:\\Users\\User\\Desktop\\wav-files-morse\\"; // output directory - use this format
 
+/**
+* Constructor
+*/
 MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus)
 {
     string filename = "morse_";
@@ -62,6 +65,14 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
         ShellExecuteA(NULL, "open", Path, NULL, NULL, SW_SHOWNORMAL);
     }
 }
+
+/**
+* Get binary morse code (dit/dah) for a given character.
+* Generate one quantum of silence or tone in PCM/WAV array.
+* sine wave: y(t) = amplitude * sin(2 * PI * frequency * time), time = s / sample_rate
+*
+* @param silence
+*/
 void MorseWav::Tones(int silence)
 {
     double seconds = Bit;   // keep seconds explicit
@@ -114,9 +125,9 @@ void MorseWav::Dah() { Tones(1); Tones(1); Tones(1); Tones(0); }
 void MorseWav::Space() { Tones(0); Tones(0); }
 
 /**
-* Create Tones from morse code.
-*
-* @param code char array with morse code ('.' = dit, '-' = dah, ' ' = space)
+* Morse code tone generator
+* 
+* @param code
 */
 void MorseWav::MorseTones(const char* code)
 {
@@ -143,8 +154,12 @@ typedef struct _wave
     WORD  cbSize;          // size, in bytes, of extra format information 
 } WAVE;
 
-
-// Write simple WAV file with 16-bit PCM data
+/**
+* Write wav file
+*
+* @param filename
+* @param pcmData
+*/
 void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdata)
 {
     long data_size, wave_size, riff_size;

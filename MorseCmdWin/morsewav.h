@@ -36,9 +36,8 @@ public:
 	/**
 	* Write wav file
 	*
-	* @param path
-	* @param data
-	* @param count
+	* @param filename
+	* @param pcmData
 	*/
 	static void WriteWav(
 		const char* filename,
