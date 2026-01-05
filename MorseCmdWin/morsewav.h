@@ -33,6 +33,7 @@ public:
 	MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus);
 	~MorseWav() = default;
 
+private:
 	/**
 	* Write wav file
 	*
