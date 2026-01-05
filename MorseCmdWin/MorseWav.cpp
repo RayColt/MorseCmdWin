@@ -55,7 +55,8 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
 
     if (play)
     {
-        /*
+        /* IF SHELLAPI DOES NOT WORK, USE SYSTEM COMMAND
+		 * BUT THIS OPENS A NEW CONSOLE WINDOW WHICH IS ANNOYING
         string str = Path;
         str += " /play /close ";
         str += Path;
