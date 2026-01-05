@@ -165,6 +165,7 @@ void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdat
     long data_size, wave_size, riff_size;
     int fmt_size = 16;
     FILE* file = NULL;
+
 	WAVE wave = { 0 };
     wave.wFormatTag = 0x1;
     wave.nChannels = NumChannels; // 1 or 2 ~ mono or stereo
@@ -177,6 +178,7 @@ void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdat
     data_size = (PcmCount * wave.wBitsPerSample * wave.nChannels) / 8;
     riff_size = fmt_size + wave_size + data_size; // 36 + data_size
 	WaveSize = riff_size + 8;
+
     // Try to create the directory
     if (_mkdir(dir.c_str()) == 0)
     {
