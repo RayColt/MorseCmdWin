@@ -25,7 +25,6 @@
 
 class MorseWav
 {
-
 public:
 	/**
 	* Constructor / Destructor
@@ -40,7 +39,7 @@ private:
 	* @param filename
 	* @param pcmData
 	*/
-	static void WriteWav(
+	void WriteWav(
 		const char* filename,
 		const std::vector<int16_t>& pcmData
 	);
@@ -52,7 +51,7 @@ private:
 	*
 	* @param silence
 	*/
-	static void Tones(int silence);
+	void Tones(int silence);
 
 	/**
 	* Define dit, dah, end of letter, end of word.
@@ -63,11 +62,11 @@ private:
 	* plus two units of silence (if end of letter, one space),
 	* plus four units of silence (if also end of word).
 	*/
-	static void Dit();
-	static void Dah();
-	static void Space();
+	void Dit();
+	void Dah();
+	void Space();
 
 	// Morse code tone generator
-	static void MorseTones(const char* code);
+	void MorseTones(const char* code);
 };
 
