@@ -27,6 +27,9 @@ class MorseWav
 {
 
 public:
+	/**
+	* Constructor / Destructor
+	*/
 	MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus);
 	~MorseWav() = default;
 
