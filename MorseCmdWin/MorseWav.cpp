@@ -144,7 +144,7 @@ typedef struct _wave
 } WAVE;
 
 
-// (Optional) Simple WAV-header + data writer for 16-bit stereo PCM.
+// Write simple WAV file with 16-bit PCM data
 void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdata)
 {
     long data_size, wave_size, riff_size;
