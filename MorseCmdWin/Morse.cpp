@@ -19,7 +19,7 @@ using namespace std;
 Morse::Morse()
 	: error_in("INPUT-ERROR"),
 	frequency_in_hertz(880.0),
-	words_per_minute(16.0),
+	words_per_minute(32.0),
 	max_frequency_in_hertz(8000.0),
 	min_frequency_in_hertz(37.0),
 	samples_per_second(44100.0)
