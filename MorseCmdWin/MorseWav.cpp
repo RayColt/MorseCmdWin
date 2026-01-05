@@ -50,7 +50,6 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     printf(" (%.1lf s @ %.1lf kHz)", (double)PcmCount / Sps, Sps / 1e3);
     printf(" written to %s (%.1f kB)\n", Path, WaveSize / 1024.0);
 
-    //printf(" written to %s (%.1f kB)\n", Path, size / 1024.0);
     if (play)
     {
         /*
