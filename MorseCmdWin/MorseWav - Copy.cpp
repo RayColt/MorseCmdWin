@@ -18,11 +18,9 @@ double Wpm;     // words per minute
 double Eps;     // elements per second (frequency of basic morse element)
 double Bit;     // duration of basic morse element,cell,quantum (seconds)
 double Sps;     // samples per second (WAV file, sound card)
-double Amplitude = 0.8; // 80% of max volume
+double amplitude = 0.8; // 80% of max volume
 vector<int16_t> pcm; // array with pcm data
-long PcmCount; // total number of samples
-long WaveSize; // size of wave file in bytes
-const string dir = "C:\\Users\\User\\Desktop\\wav-files-morse\\"; // output directory - use this format
+const string dir = "C:\\Users\\User\\Desktop\\wav-files-morseII\\"; // output directory
 
 MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus)
 {
@@ -46,11 +44,8 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     MorseWav::MorseTones(MorseCode);
     MorseWav::WriteWav(filename.c_str(), pcm);
 
-    printf("%ld PCM samples", PcmCount);
-    printf(" (%.1lf s @ %.1lf kHz)", (double)PcmCount / Sps, Sps / 1e3);
-    printf(" written to %s (%.1f kB)\n", Path, WaveSize / 1024.0);
+    printf(" written to %s \n", Path); 
 
-    //printf(" written to %s (%.1f kB)\n", Path, size / 1024.0);
     if (play)
     {
         /*
@@ -77,15 +72,14 @@ void MorseWav::Tones(int silence)
         for (size_t i = 0; i < numsamples; ++i)
         {
 			double t = static_cast<double>(i) / Sps; // time in seconds
-            double sampleL = std::sin(silence * twoPiF * t) * Amplitude;
-            double sampleR = std::sin(silence * twoPiF * t) * Amplitude;
+            double sampleL = std::sin(silence * twoPiF * t) * amplitude;
+            double sampleR = std::sin(silence * twoPiF * t) * amplitude;
 
             int16_t intSampleL = static_cast<int16_t>(clamp(sampleL, -1.0, 1.0) * maxInt16);
             int16_t intSampleR = static_cast<int16_t>(clamp(sampleR, -1.0, 1.0) * maxInt16);
 
             pcm.push_back(intSampleL);
             pcm.push_back(intSampleR);
-			PcmCount++;
         }
     }
     else
@@ -93,10 +87,9 @@ void MorseWav::Tones(int silence)
         for (size_t i = 0; i < numsamples; ++i)
         {
             double t = static_cast<double>(i) / Sps;
-            double sampleL = std::sin(silence * twoPiF * t) * Amplitude;
+            double sampleL = std::sin(silence * twoPiF * t) * amplitude;
             int16_t intSampleL = static_cast<int16_t>(clamp(sampleL, -1.0, 1.0) * maxInt16);
             pcm.push_back(intSampleL);
-            PcmCount++;
         }
     }
 }
@@ -130,39 +123,10 @@ void MorseWav::MorseTones(const char* code)
         if (c == ' ') Space();
     }
 }
- 
-typedef unsigned short WORD;
-typedef unsigned long DWORD;
-typedef struct _wave
-{
-    WORD  wFormatTag;      // format type
-    WORD  nChannels;       // number of channels (i.e. mono, stereo...)
-    DWORD nSamplesPerSec;  // sample rate
-    DWORD nAvgBytesPerSec; // for buffer estimation
-    WORD  nBlockAlign;     // block size of data
-    WORD  wBitsPerSample;  // number of bits per sample of mono data
-    WORD  cbSize;          // size, in bytes, of extra format information 
-} WAVE;
-
 
 // (Optional) Simple WAV-header + data writer for 16-bit stereo PCM.
-void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdata)
+void MorseWav::WriteWav(const char* filename, const std::vector<int16_t>& pcmData)
 {
-    long data_size, wave_size, riff_size;
-    int fmt_size = 16;
-    FILE* file = NULL;
-	WAVE wave = { 0 };
-    wave.wFormatTag = 0x1;
-    wave.nChannels = NumChannels; // 1 or 2 ~ mono or stereo
-    wave.wBitsPerSample = 16; // 8 or 16
-    wave.nBlockAlign = (wave.wBitsPerSample * wave.nChannels) / 8;
-    wave.nSamplesPerSec = (DWORD)Sps;
-    wave.nAvgBytesPerSec = wave.nSamplesPerSec * wave.nBlockAlign;
-    wave.cbSize = 0;
-    wave_size = sizeof wave;
-    data_size = (PcmCount * wave.wBitsPerSample * wave.nChannels) / 8;
-    riff_size = fmt_size + wave_size + data_size; // 36 + data_size
-	WaveSize = riff_size + 8;
     // Try to create the directory
     if (_mkdir(dir.c_str()) == 0)
     {
@@ -188,21 +152,36 @@ void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdat
         // optionally inspect errno: std::perror("open");
         exit(1);
     }
+    int byteRate = Sps * NumChannels * sizeof(int16_t);
+    int blockAlign = NumChannels * sizeof(int16_t);
+    int dataSize = static_cast<int>(pcmData.size() * sizeof(int16_t));
+    int modus = NumChannels;
 
     // RIFF header
     out.write("RIFF", 4);
-    out.write(reinterpret_cast<const char*>(&riff_size), 4);
+    uint32_t chunkSize = 36 + dataSize;
+    out.write(reinterpret_cast<const char*>(&chunkSize), 4);
     out.write("WAVE", 4);
 
     // fmt subchunk
     out.write("fmt ", 4);
-    out.write(reinterpret_cast<const char*>(&wave_size), 4);
-    out.write(reinterpret_cast<const char*>(&wave), wave_size);
+    uint32_t subChunk1Size = 16;
+    out.write(reinterpret_cast<const char*>(&subChunk1Size), 4);
+    uint16_t audioFormat = 1; // PCM
+    out.write(reinterpret_cast<const char*>(&audioFormat), 2);
+    out.write(reinterpret_cast<const char*>(&modus), 2);
+    out.write(reinterpret_cast<const char*>(&Sps), 4);
+    out.write(reinterpret_cast<const char*>(&byteRate), 4);
+    out.write(reinterpret_cast<const char*>(&blockAlign), 2);
+    uint16_t bitsPerSample = 16;
+    out.write(reinterpret_cast<const char*>(&bitsPerSample), 2);
+    const char* sizebytes = "0";
+    out.write(reinterpret_cast<const char*>(&sizebytes), 2);
 
     // data subchunk
     out.write("data", 4);
-    out.write(reinterpret_cast<const char*>(&data_size), 4);
-    out.write(reinterpret_cast<const char*>(pcmdata.data()), data_size);
+    out.write(reinterpret_cast<const char*>(&dataSize), 4);
+    out.write(reinterpret_cast<const char*>(pcmData.data()), dataSize);
 
     out.flush();
     out.close();

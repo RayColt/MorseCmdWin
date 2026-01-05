@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="morsewav.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="morse.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -27,18 +24,15 @@
     <ClInclude Include="help.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dir.h">
+    <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="morsewav.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Morse.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MorseWav.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
@@ -50,7 +44,7 @@
     <ClCompile Include="Help.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dir.cpp">
+    <ClCompile Include="MorseWav.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
