@@ -66,7 +66,11 @@ private:
 	void Dah();
 	void Space();
 
-	// Morse code tone generator
+	/**
+	* Morse code tone generator
+	*
+	* @param code
+	*/
 	void MorseTones(const char* code);
 };
 
