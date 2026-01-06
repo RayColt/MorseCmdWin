@@ -159,6 +159,7 @@ void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdat
     wave.nSamplesPerSec = (DWORD)Sps;
     wave.nAvgBytesPerSec = wave.nSamplesPerSec * wave.nBlockAlign;
     wave.cbSize = 0;
+
     wave_size = sizeof wave;
     data_size = (PcmCount * wave.wBitsPerSample * wave.nChannels) / 8;
     riff_size = fmt_size + wave_size + data_size; // 36 + data_size
