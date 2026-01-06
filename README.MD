@@ -1,7 +1,7 @@
 # MorseCmdWin
 A MORSE Encoder/Decoder Utility   Version 1.0<br>
 Console and Command line<br><br>
-<mark>Don't forget to change the save path of the created wav file in MorseWav.cpp at line 25,
+<mark>Don't forget to change the save path of the created wav file in MorseWav.h at line 29,
 <br> at string filename=&quot;C:\\Users\\User\\Desktop\\wav-files-morse&quot; or else no wav will be created.</mark> <br><br>
 <img src=https://github.com/RayColt/MorseCmdWin/blob/master/.gitfiles/Screenshot-2025-12-20-100747.jpg/>
 <br>The real, first and only US Morse mapping,<br>

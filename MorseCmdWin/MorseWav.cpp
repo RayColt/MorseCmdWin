@@ -5,43 +5,27 @@
 using namespace std;
 
 /**
-* member variables
-*/
-#define EPW 50      // elements per word (definition)
-const char* MorseCode; // string array with morse
-int Debug;      // debug mode
-int Play;       // play WAV file
-int NumChannels;   // stereo or mono modus
-const char* Path;    // output filename
-double Tone;    // tone frequency (Hz)
-double Wpm;     // words per minute
-double Eps;     // elements per second (frequency of basic morse element)
-double Bit;     // duration of basic morse element,cell,quantum (seconds)
-double Sps;     // samples per second (WAV file, sound card)
-double Amplitude = 0.8; // 80% of max volume
-vector<int16_t> pcm; // array with pcm data
-long PcmCount; // total number of samples
-long WaveSize; // size of wave file in bytes
-const string dir = "C:\\Users\\User\\Desktop\\wav-files-morse\\"; // output directory - use this format
-
-/**
 * Constructor
 */
-MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, int modus)
+MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, int modus) :     
+    MorseCode(morsecode),
+    NumChannels(modus),
+    Wpm(wpm),
+    Tone(tone),
+    Sps(samples_per_second),
+    PcmCount(0),
+	WaveSize(0)
 {
     string filename = "morse_";
     filename += to_string(time(NULL));
     filename += ".wav";
     string fp = dir + filename;
 	Path = fp.c_str();
-    MorseCode = morsecode;
-    NumChannels = modus;
-    Wpm = wpm;
-    Tone = tone;
-    Sps = samples_per_second;
+
     // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
     Bit = 1.2 / Wpm;    // seconds per element (period of morse coding)
+    
     printf("wave: %9.3lf Hz (-sps:%lg)\n", Sps, Sps);
     printf("tone: %9.3lf Hz (-tone:%lg)\n", Tone, Tone);
     printf("code: %9.3lf Hz (-wpm:%lg)\n", Eps, Wpm);

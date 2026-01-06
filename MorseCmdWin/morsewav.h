@@ -25,6 +25,21 @@
 
 class MorseWav
 {
+private:
+	const std::string dir = "C:\\Users\\User\\Desktop\\wav-files-morse\\"; // output directory - use this format
+	const char* Path; 		   // full path to wav file
+	const char* MorseCode;     // morse code string
+	int NumChannels;           // 1 = mono, 2 = stereo
+	double Wpm;                // words per minute
+	double Tone;               // tone frequency in hertz
+	double Sps;                // samples per second
+	double Eps;                // elements per second (frequency of morse coding)
+	double Bit;                // seconds per element (period of morse coding)
+	std::vector<int16_t> pcm;  // PCM data array
+	long PcmCount;             // number of PCM samples
+	long WaveSize;             // size of the wave file in bytes
+	double Amplitude = 0.8;    // 80% of max volume (0.0 to 1.0)
+
 public:
 	/**
 	* Constructor / Destructor

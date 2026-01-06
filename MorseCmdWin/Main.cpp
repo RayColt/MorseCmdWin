@@ -66,8 +66,6 @@ int get_options(int argc, char* argv[])
 			if (strncmp(argv[2], "-hz:", 4) == 0)
 			{
 				m.frequency_in_hertz = atof(&argv[2][4]);
-				if (m.frequency_in_hertz > m.max_frequency_in_hertz) m.frequency_in_hertz = m.max_frequency_in_hertz;
-				if (m.frequency_in_hertz < m.min_frequency_in_hertz) m.frequency_in_hertz = m.min_frequency_in_hertz;
 			}
 			else if (strncmp(argv[2], "-wpm:", 5) == 0)
 			{
