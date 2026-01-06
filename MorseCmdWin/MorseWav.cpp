@@ -19,7 +19,7 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     string filename = "morse_";
     filename += to_string(time(NULL));
     filename += ".wav";
-    string fp = dir + filename;
+    string fp = SaveDir + filename;
 
     // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
@@ -165,7 +165,7 @@ void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdat
 	WaveSize = riff_size + 8;
 
     // Try to create the directory
-    if (_mkdir(dir.c_str()) == 0)
+    if (_mkdir(SaveDir.c_str()) == 0)
     {
         cerr << "Directory created successfully.\n";
     }
@@ -182,10 +182,10 @@ void MorseWav::WriteWav(const char* filename, const std::vector<int16_t> &pcmdat
         }
     }
     // Open file for binary writing
-    ofstream out((dir + filename), std::ios::binary);
+    ofstream out((SaveDir + filename), std::ios::binary);
     if (!out.is_open())
     {
-        cerr << "Failed to open file: " << dir + filename << '\n';
+        cerr << "Failed to open file: " << SaveDir + filename << '\n';
         // optionally inspect errno: std::perror("open");
         exit(1);
     }
