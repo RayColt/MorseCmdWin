@@ -20,7 +20,6 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     filename += to_string(time(NULL));
     filename += ".wav";
     string fp = dir + filename;
-	Path = fp.c_str();
 
     // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
@@ -35,7 +34,7 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
 
     printf("%ld PCM samples", PcmCount);
     printf(" (%.1lf s @ %.1lf kHz)", (double)PcmCount / Sps, Sps / 1e3);
-    printf(" written to %s (%.1f kB)\n", Path, WaveSize / 1024.0);
+    printf(" written to %s (%.1f kB)\n", fp.c_str(), WaveSize / 1024.0);
 
     if (1)
     {
@@ -47,7 +46,7 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
         const char* c = str.c_str();
         printf("** %s\n", c);
         system(c);*/
-        ShellExecuteA(NULL, "open", Path, NULL, NULL, SW_SHOWNORMAL);
+        ShellExecuteA(NULL, "open", fp.c_str(), NULL, NULL, SW_SHOWNORMAL);
     }
 }
 
