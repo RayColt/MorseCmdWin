@@ -61,7 +61,8 @@ void Menu::ShowCursor()
 /**
 * Move the console cursor to a specific position.
 */
-void Menu::GotoXY(int x, int y) {
+void Menu::GotoXY(int x, int y) 
+{
     COORD pos = { (SHORT)x, (SHORT)y };
     SetConsoleCursorPosition(hOut, pos);
 }

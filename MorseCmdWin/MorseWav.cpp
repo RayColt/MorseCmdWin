@@ -27,7 +27,7 @@ const string dir = "C:\\Users\\User\\Desktop\\wav-files-morse\\"; // output dire
 /**
 * Constructor
 */
-MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, bool play, int modus)
+MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, int modus)
 {
     string filename = "morse_";
     filename += to_string(time(NULL));
@@ -53,7 +53,7 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     printf(" (%.1lf s @ %.1lf kHz)", (double)PcmCount / Sps, Sps / 1e3);
     printf(" written to %s (%.1f kB)\n", Path, WaveSize / 1024.0);
 
-    if (play)
+    if (1)
     {
         /* IF SHELLAPI DOES NOT WORK, USE SYSTEM COMMAND
 		 * BUT THIS OPENS A NEW CONSOLE WINDOW WHICH IS ANNOYING
