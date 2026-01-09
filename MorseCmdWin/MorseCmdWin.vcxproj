@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>17.0</VCProjectVersion>
+    <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{ec64e8ba-2196-4aea-8afc-5f6f7e32ff1a}</ProjectGuid>
     <RootNamespace>MorseCmdWin</RootNamespace>
