@@ -32,9 +32,12 @@ MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double sample
     MorseWav::MorseTones(MorseCode);
     MorseWav::WriteWav(filename.c_str(), pcm);
 	long pcmcount = PcmCount * NumChannels;
-    printf("%ld PCM samples", pcmcount);
-    printf(" (%.1lf s @ %.1lf kHz)", (double)pcmcount / Sps, Sps / 1e3);
-    printf(" written to %s (%.1f kB)\n", fp.c_str(), WaveSize / 1024.0);
+	double seconds = (double)PcmCount / Sps;
+	string s = to_string(seconds);
+	cout << pcmcount << " PCM samples in " ;
+	cout << seconds << " s @ " << Sps << " kHz" << "\n";
+	cout << " written to " << fp << " (" << (WaveSize / 1024.0) << " kB)" << "\n";
+
 
     if (1)
     {
@@ -128,7 +131,7 @@ void MorseWav::MorseTones(const char* code)
         if (c == ' ') Space();
     }
 }
- 
+
 typedef unsigned short WORD;
 typedef unsigned long DWORD;
 typedef struct _wave
