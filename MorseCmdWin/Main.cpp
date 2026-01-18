@@ -17,7 +17,6 @@ const int MAX_MORSE_INPUT = 2000; // max chars for morse encoding/decoding
 const int MAX_SOUND_INPUT = 750; // max chars for sound generation
 
 // default morse settings
-//const string error_in = "INPUT-ERROR";
 double frequency_in_hertz = 880.0;
 double words_per_minute = 33.0;
 double samples_per_second = 44100.0;
