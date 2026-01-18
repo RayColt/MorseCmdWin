@@ -16,17 +16,23 @@ const int MAX_TXT_INPUT = 6000; // max chars for morse encoding/decoding
 const int MAX_MORSE_INPUT = 2000; // max chars for morse encoding/decoding
 const int MAX_SOUND_INPUT = 750; // max chars for sound generation
 
+// default morse settings
+//const string error_in = "INPUT-ERROR";
+double frequency_in_hertz = 880.0;
+double words_per_minute = 33.0;
+double samples_per_second = 44100.0;
+
 /**
 * Create Safe morse settings
 */
-static void MakeMorseSafe(Morse &morse)
+static void MakeMorseSafe()
 {
-	if (morse.samples_per_second < 8000.0) morse.samples_per_second = 8000.0;
-	if (morse.samples_per_second > 48000) morse.samples_per_second = 48000.0;
-	if (morse.frequency_in_hertz < 20.0) morse.frequency_in_hertz = 20.0;
-	if (morse.frequency_in_hertz > 8000.0) morse.frequency_in_hertz = 8000.0;
-	if (morse.words_per_minute < 0.0) morse.words_per_minute = 0.0;
-	if (morse.words_per_minute > 50.0) morse.words_per_minute = 50.0;
+	if (samples_per_second < 8000.0) samples_per_second = 8000.0;
+	if (samples_per_second > 48000) samples_per_second = 48000.0;
+	if (frequency_in_hertz < 20.0) frequency_in_hertz = 20.0;
+	if (frequency_in_hertz > 8000.0) frequency_in_hertz = 8000.0;
+	if (words_per_minute < 0.0) words_per_minute = 0.0;
+	if (words_per_minute > 50.0) words_per_minute = 50.0;
 }
 
 /**
@@ -65,15 +71,15 @@ int get_options(int argc, char* argv[])
 		{
 			if (strncmp(argv[2], "-hz:", 4) == 0)
 			{
-				m.frequency_in_hertz = atof(&argv[2][4]);
+				frequency_in_hertz = atof(&argv[2][4]);
 			}
 			else if (strncmp(argv[2], "-wpm:", 5) == 0)
 			{
-				m.words_per_minute = atof(&argv[2][5]);
+				words_per_minute = atof(&argv[2][5]);
 			}
 			else if (strncmp(argv[2], "-sps:", 5) == 0)
 			{
-				m.samples_per_second = atof(&argv[2][5]);
+				samples_per_second = atof(&argv[2][5]);
 			}
 			else
 			{
@@ -166,30 +172,30 @@ int main(int argc, char* argv[])
 		{
 			string morse = m.morse_encode(arg_in);
 			cout << morse << "\n";
-			MakeMorseSafe(m);
+			MakeMorseSafe();
 
 			if (action == "wav")
 			{
-				MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, 2);
+				MorseWav mw = MorseWav(morse.c_str(), frequency_in_hertz, words_per_minute, samples_per_second, 2);
 			}
 			else if (action == "wav_mono")
 			{
-				MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, 1);
+				MorseWav mw = MorseWav(morse.c_str(), frequency_in_hertz, words_per_minute, samples_per_second, 1);
 			}
 			else
 			{
 				int size = (int)morse.size();
 				printf("wave: %9.3lf Hz (-sps:%lg)\n", sps, sps);
-				printf("tone: %9.3lf Hz (-tone:%lg)\n", m.frequency_in_hertz, m.frequency_in_hertz);
-				printf("code: %9.3lf Hz (-wpm:%lg)\n", m.words_per_minute / 1.2, m.words_per_minute);
+				printf("tone: %9.3lf Hz (-tone:%lg)\n", frequency_in_hertz, frequency_in_hertz);
+				printf("code: %9.3lf Hz (-wpm:%lg)\n", words_per_minute / 1.2, words_per_minute);
 				cout << "to be able to change sound settings, choose sound to wav file\n";
 				for (size_t i = 0; i < size; ++i)
 				{
 					char c = morse.at(i);
 					string s(1, c);
-					if (s == ".") Beep((DWORD)m.frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(m.words_per_minute)));
-					if (s == "-") Beep((DWORD)m.frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(m.words_per_minute)));
-					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(m.words_per_minute)));
+					if (s == ".") Beep((DWORD)frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(words_per_minute)));
+					if (s == "-") Beep((DWORD)frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(words_per_minute)));
+					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(words_per_minute)));
 				}
 			}
 		}
@@ -260,7 +266,7 @@ int main(int argc, char* argv[])
 					arg_in = line;
 					break;
 				}
-				m.samples_per_second = atof(arg_in.c_str());
+				samples_per_second = atof(arg_in.c_str());
 
 				cout << "Enter Tone Frequency(like 880):\n";
 				while (true)
@@ -276,7 +282,7 @@ int main(int argc, char* argv[])
 					arg_in = line;
 					break;
 				}
-				m.frequency_in_hertz = atof(arg_in.c_str());
+				frequency_in_hertz = atof(arg_in.c_str());
 				
 				cout << "Enter Words Per Minute(WPM):\n";
 				while (true)
@@ -292,32 +298,32 @@ int main(int argc, char* argv[])
 					arg_in = line;
 					break;
 				}
-				m.words_per_minute = atof(arg_in.c_str());
+				words_per_minute = atof(arg_in.c_str());
 
-				MakeMorseSafe(m);
+				MakeMorseSafe();
 				if (action == "wav")
 				{
-					MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, 2);
+					MorseWav mw = MorseWav(morse.c_str(), frequency_in_hertz, words_per_minute, samples_per_second, 2);
 				}
 				else if (action == "wav_mono")
 				{
-					MorseWav mw = MorseWav(morse.c_str(), m.frequency_in_hertz, m.words_per_minute, m.samples_per_second, 1);
+					MorseWav mw = MorseWav(morse.c_str(), frequency_in_hertz, words_per_minute, samples_per_second, 1);
 				}
 			}
 			else
 			{
 				int size = (int)morse.size();
 				printf("wave: %9.3lf Hz (-sps:%lg)\n", sps, sps);
-				printf("tone: %9.3lf Hz (-tone:%lg)\n", m.frequency_in_hertz, m.frequency_in_hertz);
-				printf("code: %9.3lf Hz (-wpm:%lg)\n", m.words_per_minute / 1.2, m.words_per_minute);
+				printf("tone: %9.3lf Hz (-tone:%lg)\n",frequency_in_hertz, frequency_in_hertz);
+				printf("code: %9.3lf Hz (-wpm:%lg)\n", words_per_minute / 1.2, words_per_minute);
 				cout << "to be able to change sound settings, choose sound to wav file\n";
 				for (size_t i = 0; i < size; ++i)
 				{
 					char c = morse.at(i);
 					string s(1, c);
-					if (s == ".") Beep((DWORD)m.frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(m.words_per_minute)));
-					if (s == "-") Beep((DWORD)m.frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(m.words_per_minute)));
-					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(m.words_per_minute)));
+					if (s == ".") Beep((DWORD)frequency_in_hertz, (DWORD)(1 * m.duration_milliseconds(words_per_minute)));
+					if (s == "-") Beep((DWORD)frequency_in_hertz, (DWORD)(3 * m.duration_milliseconds(words_per_minute)));
+					if (s == " ") Beep(0, (DWORD)(3.5 * m.duration_milliseconds(words_per_minute)));
 				}
 			}
 		}
