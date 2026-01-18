@@ -12,7 +12,6 @@
 #include <vector>
 #include <regex>
 
-
 /**
 * C++ MorseWav.h file
 */
