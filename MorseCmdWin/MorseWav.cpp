@@ -7,33 +7,34 @@ using namespace std;
 /**
 * Constructor
 */
-MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, int modus) :     
-    MorseCode(morsecode),
-    NumChannels(modus),
-    Wpm(wpm),
-    Tone(tone),
-    Sps(samples_per_second),
-    PcmCount(0),
-	WaveSize(0)
+MorseWav::MorseWav(const char* morsecode, double tone, double wpm, double samples_per_second, int modus)
 {
     string filename = "morse_";
     filename += to_string(time(NULL));
     filename += ".wav";
     string fp = SaveDir + filename;
 
+    MorseCode = morsecode;
+    NumChannels = modus;
+    Wpm = wpm;
+    Tone = tone;
+    Sps = samples_per_second;
+
     // Note 60 seconds = 1 minute and 50 elements = 1 morse word.
     Eps = Wpm / 1.2;    // elements per second (frequency of morse coding)
     Bit = 1.2 / Wpm;    // seconds per element (period of morse coding)
-    
-    printf("wave: %9.3lf Hz (-sps:%lg)\n", Sps, Sps);
-    printf("tone: %9.3lf Hz (-tone:%lg)\n", Tone, Tone);
-    printf("code: %9.3lf Hz (-wpm:%lg)\n", Eps, Wpm);
+
+	cout << "wave: " << Sps << " Hz (-sps:" << Sps << ")\n";
+	cout << "tone: " << Tone << " Hz (-hz:" << Tone << ")\n";
+	cout << "code: " << Eps << " Hz (-wpm:" << Wpm << ")\n";
 
     MorseWav::MorseTones(MorseCode);
     MorseWav::WriteWav(filename.c_str(), pcm);
+
 	long pcmcount = PcmCount * NumChannels;
-	double seconds = (double)PcmCount / Sps;
+	double seconds = (double)PcmCount / (double)Sps;
 	string s = to_string(seconds);
+
 	cout << pcmcount << " PCM samples in " ;
 	cout << seconds << " s @ " << Sps << " kHz" << "\n";
 	cout << " written to " << fp << " (" << (WaveSize / 1024.0) << " kB)" << "\n";
