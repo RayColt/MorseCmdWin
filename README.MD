@@ -9,7 +9,7 @@ Console and Command line<br><br>
       based upon Synthesizer Binary tables, from a mouse his vocal cords I believe,<br>
 or just a military  algorithm:-):<br /><br />
 
-<a href="https://raycolt.github.io/morse/">WORKING HTML EXAMPLE</a><br>
+<a href="https://raycolt.github.io/">WORKING HTML EXAMPLE</a><br>
 <pre>
 uint16_t Morse::encode(uint8_t character) 
 {
